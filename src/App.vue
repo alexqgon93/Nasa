@@ -29,7 +29,7 @@ export default {
           this.$store.commit("setUser",user);
           //console.log(this.$store.getters.getUser);
         } else {
-          alert("NO hi ha user");
+          //alert("NO hi ha user");
           //console.log("user not loged");
         }
       });
