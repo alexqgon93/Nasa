@@ -92,6 +92,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import firebase from "firebase";
 export default {
   data() {
@@ -112,18 +113,41 @@ export default {
   methods: {
     Register() {
       if (this.form.accepted != null) {
-        if (email.length < 4) {
+        if (this.form.email.length < 4) {
           alert("Please enter an email address.");
           return;
-        } else {
-          let messageToSend = {
-            //this.form.email: this.form.email;
+        } else {          
+          var actionCodeSettings = {
+            // URL you want to redirect back to. The domain (www.example.com) for this
+            // URL must be whitelisted in the Firebase Console.
+            url: "https://nasa-workspace.netlify.com/home",
+            // This must be true.
+            handleCodeInApp: true,
+            iOS: {
+              bundleId: "https://nasa-workspace.netlify.com/home"
+            },
+            android: {
+              packageName: "https://nasa-workspace.netlify.com/home",
+              installApp: true,
+              minimumVersion: "12"
+            },
+            dynamicLinkDomain: "https://nasa-workspace.netlify.com/home"
           };
         }
         firebase
-          .database()
-          .ref("messages")
-          .push(messageToSend);
+          .auth()
+          .sendSignInLinkToEmail(this.form.email, actionCodeSettings)
+          .then(function() {
+            // The link was successfully sent. Inform the user.
+            // Save the email locally so you don't need to ask the user for it again
+            // if they open the link on the same device.
+            alert("Link has been sent to your email");
+            window.localStorage.setItem("emailForSignIn", this.form.email);
+          })
+          .catch(function(error) {
+            //console.log(error);
+            // Some error occurred, you can inspect the code: error.code
+          });
       } else {
         alert("You must accept the treatment of your information!!!");
       }

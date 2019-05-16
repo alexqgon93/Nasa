@@ -24,10 +24,10 @@ export default {
       //to know if the user is loged or not
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
-          console.log("user loged");
+          //console.log("user loged");
           this.$store.commit.setUser(user);
         } else {
-          console.log("user not loged");
+          //console.log("user not loged");
         }
       });
     }
