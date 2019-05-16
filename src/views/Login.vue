@@ -103,6 +103,7 @@ export default {
         .signInWithPopup(provider)
         .then(user => {
           this.$store.commit("setUser", user);
+          firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
           this.$router.push("Home");
         })
         .catch(error => alert(error));

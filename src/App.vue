@@ -16,17 +16,20 @@ export default {
   },
   created() {
     this.$store.dispatch("getData");
-    this.getUser;
+    this.getUser();
   },
   methods: {
     //we check if the user is loged or not
-    getUse() {
+    getUser() {
       //to know if the user is loged or not
-      firebase.auth().onAuthStateChanged(function(user) {
+      firebase.auth().onAuthStateChanged(user=> {
         if (user) {
           //console.log("user loged");
-          this.$store.commit.setUser(user);
+          //alert("hi ha user");
+          this.$store.commit("setUser",user);
+          //console.log(this.$store.getters.getUser);
         } else {
+          alert("NO hi ha user");
           //console.log("user not loged");
         }
       });

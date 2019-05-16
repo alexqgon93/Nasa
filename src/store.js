@@ -23,7 +23,7 @@ export default new Vuex.Store({
       state.events = payload;
     },
     setUser(state, payload) {
-      state.user = payload.user;
+      state.user = payload;
     },
   },
   getters: {
