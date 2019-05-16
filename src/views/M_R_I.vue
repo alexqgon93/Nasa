@@ -25,6 +25,13 @@
             </v-list-tile-content>
           </v-list-tile>
         </router-link>
+        <router-link to="/e_i">
+          <v-list-tile class="item">
+            <v-list-tile-content>
+              <v-list-tile-title>Epic Camera</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </router-link>
         <router-link to="/m_r_p">
           <v-list-tile class="item">
             <v-list-tile-content>
@@ -32,7 +39,7 @@
             </v-list-tile-content>
           </v-list-tile>
         </router-link>
-        <router-link to="/l">
+        <router-link to="/l" v-if="!nameUser">
           <v-list-tile class="item">
             <v-list-tile-content>
               <v-list-tile-title>Login</v-list-tile-title>

@@ -41,7 +41,7 @@
             </v-list-tile-content>
           </v-list-tile>
         </router-link>
-        <router-link to="/l">
+        <router-link to="/l" v-if="!nameUser">
           <v-list-tile class="item">
             <v-list-tile-content>
               <v-list-tile-title>Login</v-list-tile-title>
