@@ -1,9 +1,9 @@
 <template>
-  <div class="exterior_1" v-if="data != null">
+  <div class="exterior_1">
     <!--First the nav bar--->
     <v-toolbar>
       <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title class="white--text">Home - Nasa</v-toolbar-title>
+      <v-toolbar-title class="white--text">EPIC Camera</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
@@ -13,17 +13,17 @@
     </v-toolbar>
     <v-navigation-drawer v-model="drawer" absolute temporary>
       <v-list class="pa-0" dense>
+        <router-link to="/home">
+          <v-list-tile class="item">
+            <v-list-tile-content>
+              <v-list-tile-title>Home</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </router-link>
         <router-link to="/e_p">
           <v-list-tile class="item">
             <v-list-tile-content>
               <v-list-tile-title>Epic Earth Photos</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-        </router-link>
-        <router-link to="/e_i">
-          <v-list-tile class="item">
-            <v-list-tile-content>
-              <v-list-tile-title>Epic Camera</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
         </router-link>
@@ -57,56 +57,16 @@
         </router-link>
       </v-list>
     </v-navigation-drawer>
-    <h1 class="font_1" v-if="nameUser!=null">Welcome {{nameUser.displayName}}</h1>
-    <h1 class="font">Picture of the day</h1>
-
-    <div class="p_day_div">
-      <v-container>
-        <v-img :src="data.hdurl" class="grey lighten-2" :lazy-src="data.hdurl" aspect-ratio="1">
-          <template v-slot:placeholder>
-            <v-layout fill-height align-center justify-center ma-0>
-              <v-progress-circular indeterminate color="blue"></v-progress-circular>
-            </v-layout>
-          </template>
-        </v-img>
-      </v-container>
-      <v-container>
-        <p>{{data.explanation}}</p>
-      </v-container>
-    </div>
-    <div class="font">
-      <h1>Recently updates</h1>
-
-      <v-container v-if="events!=null">
-        <v-list>
-          <template v-for="(event,index) in events.events">
-            <v-flex v-if="((getUrl(event.sources[0])))" :key="index">
-              <a
-                dark
-                @click="dialog = true"
-                v-on:click="pressed = event.sources[0].url"
-              >{{event.title}}</a>
-            </v-flex>
-          </template>
-        </v-list>
-
-        <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
-          <v-card>
-            <v-toolbar dark color="primary">
-              <v-btn icon dark @click="dialog = false">
-                <v-icon>close</v-icon>
-              </v-btn>
-              <v-toolbar-title>Content Info</v-toolbar-title>
-              <v-spacer></v-spacer>
-              <v-toolbar-items>
-                <v-btn dark flat @click="dialog = false">CLOSE</v-btn>
-              </v-toolbar-items>
-            </v-toolbar>
-            <iframe :src="pressed" frameborder="0" allowfullscreen></iframe>
-          </v-card>
-        </v-dialog>
-      </v-container>
-    </div>
+    <h1 class="font">WHAT IS EPIC?</h1>
+    <v-container>
+      <p class="p_day_div">
+        EPIC (Earth Polychromatic Imaging Camera) is a 10-channel spectroradiometer (317 – 780 nm) onboard NOAA’s DSCOVR (Deep Space Climate Observatory) spacecraft. EPIC provides 10 narrow band spectral images of the entire sunlit face of Earth using a 2048x2048 pixel CCD (Charge Coupled Device) detector coupled to a 30-cm aperture Cassegrain telescope (Figure 1).
+        The DSCOVR spacecraft is located at the Earth-Sun Lagrange-1 (L-1) point giving EPIC a unique angular perspective that will be used in science applications to measure ozone, aerosols, cloud reflectivity, cloud height, vegetation properties, and UV radiation estimates at Earth's surface.
+      </p>
+    </v-container>
+    <v-container class="container_ep_i">
+      <v-img src="epic_camera.jpg"/>
+    </v-container>
     <v-footer height="auto" color="primary lighten-1" class="footer_div">
       <v-layout justify-center row wrap>
         <v-flex primary lighten-2 py-3 text-xs-center white--text xs12>
@@ -122,45 +82,19 @@
 export default {
   data() {
     return {
-      dialog: false,
-      drawer: false,
-      pressed: null
+      dropdown_font: ["natural", "enhanched"],
+      selected: "",
+      drawer: false
     };
   },
-  methods: {
-    getUrl(url) {
-      if (!url) {
-        return false;
-      } else {
-        if (url.url.includes("txt")) {
-          return false;
-        } else if (url.url.includes("csv")) {
-          // console.log(url.url, "csv", false);
-          return false;
-        } else if (url.url.includes("tcw")) {
-          // console.log(url.url, "tcw", false);
-          return false;
-        } else if (url.url.includes("ascat")) {
-          return false;
-        } else {
-          return true;
-        }
-      }
-    }
-  },
   computed: {
-    data() {
-      return this.$store.getters.getData;
-    },
-    events() {
-      return this.$store.getters.getEvents;
-    },
     nameUser() {
       return this.$store.getters.getUser;
     }
   }
 };
 </script>
+
 <style>
 .exterior_1 {
   background-image: url("/uniphoto.jpg");
@@ -169,6 +103,7 @@ export default {
   position: relative;
   background-attachment: fixed;
   background-repeat: no-repeat;
+  height: 100%;
 }
 .p_day_div {
   color: white;
@@ -181,9 +116,6 @@ export default {
 .v-list.theme--dark {
   background-color: lightsteelblue;
   color: black;
-}
-.v-list.theme--light {
-  margin-bottom: 15%;
 }
 .pa-0 {
   margin-top: 10%;
@@ -205,18 +137,14 @@ nav.v-toolbar.theme--light {
 a.router-link-active {
   text-decoration: none;
 }
-iframe {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-}
 .footer_div {
   position: absolute;
   bottom: 0;
   width: 100%;
 }
-.font_1 {
-  color: powderblue;
-  text-align: center;
+.container_ep_i {
+  margin-bottom: 15%;
 }
 </style>
+
+

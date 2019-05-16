@@ -3,12 +3,12 @@
     <!--First the nav bar--->
     <v-toolbar>
       <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title class="white--text">About Us</v-toolbar-title>
+      <v-toolbar-title class="white--text">Registration</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
       <v-btn icon>
-        <v-img v-if="nameUser" :src="nameUser.photoURL"></v-img>
+        <v-icon>more_vert</v-icon>
       </v-btn>
     </v-toolbar>
     <v-navigation-drawer v-model="drawer" absolute temporary>
@@ -27,6 +27,13 @@
             </v-list-tile-content>
           </v-list-tile>
         </router-link>
+        <router-link to="/e_i">
+          <v-list-tile class="item">
+            <v-list-tile-content>
+              <v-list-tile-title>Epic Earth Info</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </router-link>
         <router-link to="/m_r_p">
           <v-list-tile class="item">
             <v-list-tile-content>
@@ -41,28 +48,38 @@
             </v-list-tile-content>
           </v-list-tile>
         </router-link>
-        <router-link to="/l">
+        <router-link to="/about">
           <v-list-tile class="item">
             <v-list-tile-content>
-              <v-list-tile-title>Login</v-list-tile-title>
+              <v-list-tile-title>Gerenal Info</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
         </router-link>
       </v-list>
     </v-navigation-drawer>
-    <h1 class="font">General Information</h1>
+    <h1 class="font">Sign up</h1>
     <v-container>
-      <h2 class="font">Information about the develop</h2>
-      <p
-        class="p_day_div"
-      >This page has been created through the information that the Api's provided by NASA official page. We are a collective of people who like's to know more about the universe. We stand for the science beyond the limits of the space and we created this app for people like us.</p>
+      <form class="form_s">
+        <!-- <v-text-field label="Name" class="labels" v-model="form.name"></v-text-field>
+        <v-text-field label="Surname" v-model="form.surname"></v-text-field>-->
+        <v-text-field label="E-mail" v-model="form.email"></v-text-field>
+        <!--<v-text-field label="Username" v-model="form.username"></v-text-field>
+        <v-text-field
+          v-model="form.password"
+          :type="show1 ? 'text' : 'password'"
+          name="input-10-1"
+          label="Password"
+        ></v-text-field>-->
+        <v-checkbox
+          label="I agree to NAEGSA's storage and processing of my personal data"
+          v-model="form.accepted"
+        ></v-checkbox>
+        <div class="en_but">
+          <v-btn v-on:click="Register">Register</v-btn>
+        </div>
+      </form>
     </v-container>
-    <v-container>
-      <h2 class="font">App Porpuses</h2>
-      <p
-        class="p_day_div"
-      >The purpose of this app is focused to give the opportunity to those who likes to be in contact with space information and wants to be connected and enjoy with perfect pictures, news about the catastrophic issues, and get to know information about the systems that provides the information that we are able to show. We do not own the rights to the Api's we have taken the info from. All the API's can be found in the NASA official.</p>
-    </v-container>
+
     <v-footer height="auto" color="primary lighten-1" class="footer_div">
       <v-layout justify-center row wrap>
         <v-flex primary lighten-2 py-3 text-xs-center white--text xs12>
@@ -74,21 +91,42 @@
   </div>
 </template>
 
-
 <script>
-//import HelloWorld from '../components/HelloWorld'
-
+import firebase from "firebase";
 export default {
   data() {
     return {
-      dropdown_font: ["natural", "enhanched"],
+      show1: false,
       selected: "",
-      drawer: false
+      drawer: false,
+      form: {
+        //name: null,
+        //surname: null,
+        email: null,
+        //username: null,
+        //password: null,
+        accepted: null
+      }
     };
   },
-  computed: {
-    nameUser() {
-      return this.$store.getters.getUser;
+  methods: {
+    Register() {
+      if (this.form.accepted != null) {
+        if (email.length < 4) {
+          alert("Please enter an email address.");
+          return;
+        } else {
+          let messageToSend = {
+            //this.form.email: this.form.email;
+          };
+        }
+        firebase
+          .database()
+          .ref("messages")
+          .push(messageToSend);
+      } else {
+        alert("You must accept the treatment of your information!!!");
+      }
     }
   }
 };
@@ -140,5 +178,29 @@ a.router-link-active {
   bottom: 0;
   width: 100%;
 }
+.form_s {
+  margin-bottom: 15%;
+}
+label.v-label.theme--light {
+  color: white;
+}
+::before,
+::after {
+  text-decoration: inherit;
+  vertical-align: inherit;
+  background-color: white;
+}
+input[type="text"]:focus {
+  background-color: rgba(255, 255, 255, 0.452);
+  text-decoration-color: aliceblue;
+}
+.theme--light.v-input:not(.v-input--is-disabled) input,
+.theme--light.v-input:not(.v-input--is-disabled) textarea {
+  color: white;
+}
+.theme--light.v-icon {
+  color: white;
+}
 </style>
+
 

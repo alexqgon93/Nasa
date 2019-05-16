@@ -3,10 +3,10 @@
     <!--First the nav bar--->
     <v-toolbar>
       <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title class="white--text">About Us</v-toolbar-title>
+      <v-toolbar-title class="white--text" v-if="!nameUser">Login</v-toolbar-title>
+      <v-toolbar-title class="white--text" v-if="nameUser!=null">{{nameUser.displayName}}</v-toolbar-title>
 
       <v-spacer></v-spacer>
-
       <v-btn icon>
         <v-img v-if="nameUser" :src="nameUser.photoURL"></v-img>
       </v-btn>
@@ -27,6 +27,13 @@
             </v-list-tile-content>
           </v-list-tile>
         </router-link>
+        <router-link to="/e_i">
+          <v-list-tile class="item">
+            <v-list-tile-content>
+              <v-list-tile-title>Epic Earth Info</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </router-link>
         <router-link to="/m_r_p">
           <v-list-tile class="item">
             <v-list-tile-content>
@@ -41,28 +48,34 @@
             </v-list-tile-content>
           </v-list-tile>
         </router-link>
-        <router-link to="/l">
+        <router-link to="/about">
           <v-list-tile class="item">
             <v-list-tile-content>
-              <v-list-tile-title>Login</v-list-tile-title>
+              <v-list-tile-title>Gerenal Info</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
         </router-link>
       </v-list>
     </v-navigation-drawer>
-    <h1 class="font">General Information</h1>
+    <h1 class="font">Login</h1>
     <v-container>
-      <h2 class="font">Information about the develop</h2>
-      <p
-        class="p_day_div"
-      >This page has been created through the information that the Api's provided by NASA official page. We are a collective of people who like's to know more about the universe. We stand for the science beyond the limits of the space and we created this app for people like us.</p>
+      <form class="form_s">
+        <v-text-field label="Username" class="labels"></v-text-field>
+        <v-text-field label="Password"></v-text-field>
+        <div class="en_but">
+          <v-btn>Enter</v-btn>
+          <a v-on:click="login">
+            <img src="google_icon.png" class="icon">
+          </a>
+        </div>
+      </form>
     </v-container>
-    <v-container>
-      <h2 class="font">App Porpuses</h2>
-      <p
-        class="p_day_div"
-      >The purpose of this app is focused to give the opportunity to those who likes to be in contact with space information and wants to be connected and enjoy with perfect pictures, news about the catastrophic issues, and get to know information about the systems that provides the information that we are able to show. We do not own the rights to the Api's we have taken the info from. All the API's can be found in the NASA official.</p>
-    </v-container>
+    <h2 class="font">If you are not registered follow the link</h2>
+    <div class="en_but">
+      <router-link to="/s_u">
+        <v-btn depressed small color="primary">Register</v-btn>
+      </router-link>
+    </div>
     <v-footer height="auto" color="primary lighten-1" class="footer_div">
       <v-layout justify-center row wrap>
         <v-flex primary lighten-2 py-3 text-xs-center white--text xs12>
@@ -74,17 +87,26 @@
   </div>
 </template>
 
-
 <script>
-//import HelloWorld from '../components/HelloWorld'
-
+import firebase from "firebase";
 export default {
   data() {
     return {
-      dropdown_font: ["natural", "enhanched"],
-      selected: "",
       drawer: false
     };
+  },
+  methods: {
+    login() {
+      var provider = new firebase.auth.GoogleAuthProvider();
+      firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then(user => {
+          this.$store.commit("setUser", user);
+          this.$router.push("Home");
+        })
+        .catch(error => alert(error));
+    }
   },
   computed: {
     nameUser() {
@@ -140,5 +162,16 @@ a.router-link-active {
   bottom: 0;
   width: 100%;
 }
+.container_ep {
+  margin-bottom: 10%;
+}
+.en_but {
+  text-align: center;
+}
+.icon {
+  width: 10%;
+}
 </style>
+
+
 

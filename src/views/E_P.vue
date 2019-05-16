@@ -1,9 +1,9 @@
 <template>
-  <div class="exterior_1" v-if="data != null">
+  <div class="exterior_1" v-if="(natural != null)&&(enhanched!=null)">
     <!--First the nav bar--->
     <v-toolbar>
       <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title class="white--text">Home - Nasa</v-toolbar-title>
+      <v-toolbar-title class="white--text">Epic Earth Photos</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
@@ -13,17 +13,17 @@
     </v-toolbar>
     <v-navigation-drawer v-model="drawer" absolute temporary>
       <v-list class="pa-0" dense>
-        <router-link to="/e_p">
+        <router-link to="/home">
           <v-list-tile class="item">
             <v-list-tile-content>
-              <v-list-tile-title>Epic Earth Photos</v-list-tile-title>
+              <v-list-tile-title>Home</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
         </router-link>
         <router-link to="/e_i">
           <v-list-tile class="item">
             <v-list-tile-content>
-              <v-list-tile-title>Epic Camera</v-list-tile-title>
+              <v-list-tile-title>Epic Camera Info</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
         </router-link>
@@ -57,56 +57,17 @@
         </router-link>
       </v-list>
     </v-navigation-drawer>
-    <h1 class="font_1" v-if="nameUser!=null">Welcome {{nameUser.displayName}}</h1>
-    <h1 class="font">Picture of the day</h1>
-
-    <div class="p_day_div">
-      <v-container>
-        <v-img :src="data.hdurl" class="grey lighten-2" :lazy-src="data.hdurl" aspect-ratio="1">
-          <template v-slot:placeholder>
-            <v-layout fill-height align-center justify-center ma-0>
-              <v-progress-circular indeterminate color="blue"></v-progress-circular>
-            </v-layout>
-          </template>
-        </v-img>
-      </v-container>
-      <v-container>
-        <p>{{data.explanation}}</p>
-      </v-container>
+    <h1 class="font">Epic images of the Earth</h1>
+    <h2 class="font">Info of the camera:</h2>
+    <div class="en_but">
+      <router-link to="/e_i">
+        <v-btn depressed small color="primary">EPIC (Earth Polychromatic Imaging Camera)</v-btn>
+      </router-link>
     </div>
-    <div class="font">
-      <h1>Recently updates</h1>
-
-      <v-container v-if="events!=null">
-        <v-list>
-          <template v-for="(event,index) in events.events">
-            <v-flex v-if="((getUrl(event.sources[0])))" :key="index">
-              <a
-                dark
-                @click="dialog = true"
-                v-on:click="pressed = event.sources[0].url"
-              >{{event.title}}</a>
-            </v-flex>
-          </template>
-        </v-list>
-
-        <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
-          <v-card>
-            <v-toolbar dark color="primary">
-              <v-btn icon dark @click="dialog = false">
-                <v-icon>close</v-icon>
-              </v-btn>
-              <v-toolbar-title>Content Info</v-toolbar-title>
-              <v-spacer></v-spacer>
-              <v-toolbar-items>
-                <v-btn dark flat @click="dialog = false">CLOSE</v-btn>
-              </v-toolbar-items>
-            </v-toolbar>
-            <iframe :src="pressed" frameborder="0" allowfullscreen></iframe>
-          </v-card>
-        </v-dialog>
-      </v-container>
-    </div>
+    <v-container class="p_day_div">
+      <h2>choose natural images or enhanched</h2>
+      <v-select label="Type of Pictures" :items="dropdown_font"></v-select>
+    </v-container>
     <v-footer height="auto" color="primary lighten-1" class="footer_div">
       <v-layout justify-center row wrap>
         <v-flex primary lighten-2 py-3 text-xs-center white--text xs12>
@@ -122,39 +83,30 @@
 export default {
   data() {
     return {
-      dialog: false,
-      drawer: false,
-      pressed: null
+      natural: null,
+      enhanched: null,
+      dropdown_font: ["natural", "enhanched"],
+      drawer: false
     };
   },
   methods: {
-    getUrl(url) {
-      if (!url) {
-        return false;
-      } else {
-        if (url.url.includes("txt")) {
-          return false;
-        } else if (url.url.includes("csv")) {
-          // console.log(url.url, "csv", false);
-          return false;
-        } else if (url.url.includes("tcw")) {
-          // console.log(url.url, "tcw", false);
-          return false;
-        } else if (url.url.includes("ascat")) {
-          return false;
-        } else {
-          return true;
-        }
-      }
+    getData() {
+      fetch(this.$store.state.url_natural)
+        .then(r => r.json())
+        .then(data => {
+          this.natural = data;
+        });
+      fetch(this.$store.state.url_enhanched)
+        .then(r => r.json())
+        .then(data => {
+          this.enhanched = data;
+        });
     }
   },
+  created() {
+    this.getData();
+  },
   computed: {
-    data() {
-      return this.$store.getters.getData;
-    },
-    events() {
-      return this.$store.getters.getEvents;
-    },
     nameUser() {
       return this.$store.getters.getUser;
     }
@@ -182,9 +134,6 @@ export default {
   background-color: lightsteelblue;
   color: black;
 }
-.v-list.theme--light {
-  margin-bottom: 15%;
-}
 .pa-0 {
   margin-top: 10%;
 }
@@ -205,18 +154,11 @@ nav.v-toolbar.theme--light {
 a.router-link-active {
   text-decoration: none;
 }
-iframe {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-}
 .footer_div {
   position: absolute;
   bottom: 0;
   width: 100%;
 }
-.font_1 {
-  color: powderblue;
-  text-align: center;
-}
 </style>
+
+
