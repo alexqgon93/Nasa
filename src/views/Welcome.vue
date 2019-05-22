@@ -6,7 +6,6 @@
       </div>
     </div>
     <div class="interior_2">
-      <!--Link the image to home--->
       <router-link to="/home">
         <v-img class="img" src="NASA-Logo.png" lazy-src="NASA-Logo.png"/>
       </router-link>
@@ -47,10 +46,12 @@ export default {};
   position: absolute;
   bottom: 0%;
   margin-bottom: 2%;
-  margin-left: 35%;
+  left: 36%;
+  width: 20%;
+  display: block;
 }
 .logos {
-  width: 25%;
+  width: 100px;
   float: right;
   margin-right: 2%;
 }

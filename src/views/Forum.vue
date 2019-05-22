@@ -1,57 +1,190 @@
 <template>
-  <div>
-    <div id="mensajes"></div>
-    <input type="text" name="text" v-model="input">
-    <button v-on:click="login">Login</button>
-    <button v-on:click="send">Send</button>
+  <div class="exterior_1">
+    <!--First the nav bar--->
+    <v-toolbar>
+      <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
+      <v-toolbar-title class="white--text">Forum Main Page</v-toolbar-title>
+
+      <v-spacer></v-spacer>
+
+      <v-btn icon>
+        <v-img v-if="nameUser" :src="nameUser.photoURL"></v-img>
+      </v-btn>
+    </v-toolbar>
+    <v-navigation-drawer v-model="drawer" absolute temporary>
+      <v-list class="pa-0" dense>
+        <router-link to="/home">
+          <v-list-tile class="item">
+            <v-list-tile-content>
+              <v-list-tile-title>Home</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </router-link>
+        <router-link to="/e_p">
+          <v-list-tile class="item">
+            <v-list-tile-content>
+              <v-list-tile-title>Epic Earth Photos</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </router-link>
+        <router-link to="/e_i">
+          <v-list-tile class="item">
+            <v-list-tile-content>
+              <v-list-tile-title>Epic Camera</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </router-link>
+        <router-link to="/m_r_p">
+          <v-list-tile class="item">
+            <v-list-tile-content>
+              <v-list-tile-title>Mars Rover Photos</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </router-link>
+        <router-link to="/m_r_i">
+          <v-list-tile class="item">
+            <v-list-tile-content>
+              <v-list-tile-title>Mars Rover Info</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </router-link>
+        <router-link to="/l" v-if="!nameUser">
+          <v-list-tile class="item">
+            <v-list-tile-content>
+              <v-list-tile-title>Login</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </router-link>
+        <a v-on:click="logout" v-if="nameUser">
+          <v-list-tile class="item">
+            <v-list-tile-content>
+              <v-list-tile-title>Logout</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </a>
+        <router-link to="/about">
+          <v-list-tile class="item">
+            <v-list-tile-content>
+              <v-list-tile-title>Gerenal Info</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </router-link>
+      </v-list>
+    </v-navigation-drawer>
+    <v-container>
+      <h1 class="font">Center of the Forum's pages</h1>
+      <h2
+        class="font"
+      >Should you talk to one chat, click on one and feel free to add some information!!</h2>
+      <router-link to="/f_s_s">
+        <v-btn color="warning">Space Shuttle Chat</v-btn>
+      </router-link>
+      <router-link to="/f_m_m">
+        <v-btn color="warning">Mars Missions</v-btn>
+      </router-link>
+      <h2
+        class="font"
+      >If you don't find one that fits you and would like to open a new one please named and press new button</h2>
+      <v-btn color="warning">New Chat</v-btn>
+    </v-container>
+    <v-footer height="auto" color="primary lighten-1" class="footer_div">
+      <v-layout justify-center row wrap>
+        <v-flex primary lighten-2 py-3 text-xs-center white--text xs12>
+          &copy;2019 —
+          <strong>NAEGSA</strong>
+        </v-flex>
+      </v-layout>
+    </v-footer>
   </div>
 </template>
+
 
 <script>
 import firebase from "firebase";
 export default {
   data() {
     return {
+      drawer: false,
       input: null,
       user: null,
       name: null,
       email: null,
       photoUrl: null,
-      uid: null
+      uid: null,
+      card_text:
+        "Lorem ipsum dolor sit amet, brute iriure accusata ne mea. Eos suavitate referrentur ad, te duo agam libris qualisque, utroque quaestio accommodare no qui. Et percipit laboramus usu, no invidunt verterem nominati mel. Dolorem ancillae an mei, ut putant invenire splendide mel, ea nec propriae adipisci. Ignota salutandi accusamus in sed, et per malis fuisset, qui id ludus appareat."
     };
   },
   methods: {
-    login() {
-      var provider = new firebase.auth.GoogleAuthProvider();
+    logout() {
       firebase
         .auth()
-        .signInWithPopup(provider)
-        .then(user => {
-          this.name = user.user.displayName;
-          this.email = user.user.email;
-          this.photoUrl = user.user.photoURL;
-          this.emailVerified = user.user.emailVerified;
-          this.uid = user.user.uid; // The user's ID, unique to the Firebase project. Do NOT use
-          // this value to authenticate with your backend server, if
-          // you have one. Use User.getToken() instead.
-        });
-
-      //to know if the user is loged or not
-      firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-          console.log("user loged");
-        } else {
-          console.log("user not loged");
-        }
-      });
-    },
-    send() {
-      console.log("Pressed send messages");
-    },
-    getMessages() {}
+        .signOut()
+        .then(
+          () => {
+            //we need to change the user in storage to complete the logout
+            this.$store.commit("setUser", null);
+            this.$router.push("/");
+          },
+          function(error) {
+            console.error("Sign Out Error", error);
+          }
+        );
+    }
+  },
+  computed: {
+    nameUser() {
+      return this.$store.getters.getUser;
+    }
   }
 };
 </script>
-
 <style>
+.exterior_1 {
+  background-image: url("/uniphoto.jpg");
+  max-width: 100%;
+  background-size: cover;
+  position: relative;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  height: 100%;
+}
+.p_day_div {
+  color: white;
+  text-align: justify;
+}
+.font {
+  color: white;
+  text-align: center;
+}
+.v-list.theme--dark {
+  background-color: lightsteelblue;
+  color: black;
+}
+.pa-0 {
+  margin-top: 10%;
+}
+.v-list__tile__title {
+  font-size: 25px;
+}
+.item {
+  margin-bottom: 10%;
+  font-size: 5%;
+  color: white;
+}
+aside.v-navigation-drawer.v-navigation-drawer--absolute.v-navigation-drawer--open.v-navigation-drawer--temporary.theme--light {
+  background-color: darkgrey;
+}
+nav.v-toolbar.theme--light {
+  background-color: darkgray;
+}
+a.router-link-active {
+  text-decoration: none;
+}
+.footer_div {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
 </style>
+

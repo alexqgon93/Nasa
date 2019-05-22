@@ -8,6 +8,8 @@ import Login from "./views/Login.vue";
 import Sign_Up from "./views/Sign_Up.vue";
 import Mars_Rover_Info from "./views/M_R_I.vue";
 import Forum from "./views/Forum.vue";
+import F_S_S from "./views/F_S_S.vue";
+import F_M_M from "./views/F_M_M.vue";
 
 
 
@@ -55,6 +57,16 @@ export default new Router({
       path: "/forum",
       name: "forum",
       component: Forum
+    },
+    {
+      path: "/f_s_s",
+      name: "forum_s_s",
+      component: F_S_S
+    },
+    {
+      path: "/f_m_m",
+      name: "forum_m_m",
+      component: F_M_M
     },
     {
       path: "/about",

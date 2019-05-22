@@ -3,7 +3,7 @@
     <!--First the nav bar--->
     <v-toolbar>
       <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title class="white--text">EPIC Camera</v-toolbar-title>
+      <v-toolbar-title class="white--text">Forum Space Shuttle</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
@@ -27,6 +27,13 @@
             </v-list-tile-content>
           </v-list-tile>
         </router-link>
+        <router-link to="/e_i">
+          <v-list-tile class="item">
+            <v-list-tile-content>
+              <v-list-tile-title>Epic Camera</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </router-link>
         <router-link to="/m_r_p">
           <v-list-tile class="item">
             <v-list-tile-content>
@@ -41,10 +48,10 @@
             </v-list-tile-content>
           </v-list-tile>
         </router-link>
-        <router-link to="/l" v-if="!nameUser">
+        <router-link to="/forum" v-if="nameUser">
           <v-list-tile class="item">
             <v-list-tile-content>
-              <v-list-tile-title>Login</v-list-tile-title>
+              <v-list-tile-title>Forum</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
         </router-link>
@@ -64,15 +71,27 @@
         </router-link>
       </v-list>
     </v-navigation-drawer>
-    <h1 class="font">WHAT IS EPIC?</h1>
     <v-container>
-      <p class="p_day_div">
-        EPIC (Earth Polychromatic Imaging Camera) is a 10-channel spectroradiometer (317 – 780 nm) onboard NOAA’s DSCOVR (Deep Space Climate Observatory) spacecraft. EPIC provides 10 narrow band spectral images of the entire sunlit face of Earth using a 2048x2048 pixel CCD (Charge Coupled Device) detector coupled to a 30-cm aperture Cassegrain telescope (Figure 1).
-        The DSCOVR spacecraft is located at the Earth-Sun Lagrange-1 (L-1) point giving EPIC a unique angular perspective that will be used in science applications to measure ozone, aerosols, cloud reflectivity, cloud height, vegetation properties, and UV radiation estimates at Earth's surface.
-      </p>
-    </v-container>
-    <v-container class="container_ep_i">
-      <v-img src="epic_camera.jpg"/>
+      <!-- <div id="mensajes"></div>
+      <input type="text" name="text" v-model="input">
+      <button v-on:click="send">Send</button>-->
+      <v-layout>
+        <v-flex xs12 sm6 offset-sm3>
+          <v-card>
+            <v-card-title primary-title>
+              <div>
+                <h3 class="headline mb-0">Kangaroo Valley Safari</h3>
+                <div>{{ card_text }}</div>
+              </div>
+            </v-card-title>
+
+            <v-card-actions>
+              <!--Need to put anbd unpit so we can talk, diferents user talks--->
+              <v-btn flat color="orange">Send</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-flex>
+      </v-layout>
     </v-container>
     <v-footer height="auto" color="primary lighten-1" class="footer_div">
       <v-layout justify-center row wrap>
@@ -85,16 +104,27 @@
   </div>
 </template>
 
+
 <script>
+import firebase from "firebase";
 export default {
   data() {
     return {
-      dropdown_font: ["natural", "enhanched"],
-      selected: "",
-      drawer: false
+      drawer: false,
+      input: null,
+      user: null,
+      name: null,
+      email: null,
+      photoUrl: null,
+      uid: null,
+      card_text:
+        "Lorem ipsum dolor sit amet, brute iriure accusata ne mea. Eos suavitate referrentur ad, te duo agam libris qualisque, utroque quaestio accommodare no qui. Et percipit laboramus usu, no invidunt verterem nominati mel. Dolorem ancillae an mei, ut putant invenire splendide mel, ea nec propriae adipisci. Ignota salutandi accusamus in sed, et per malis fuisset, qui id ludus appareat."
     };
   },
-  methods:{
+  methods: {
+    send() {
+      console.log("Pressed send messages");
+    },
     logout() {
       firebase
         .auth()
@@ -118,7 +148,6 @@ export default {
   }
 };
 </script>
-
 <style>
 .exterior_1 {
   background-image: url("/uniphoto.jpg");
@@ -166,9 +195,5 @@ a.router-link-active {
   bottom: 0;
   width: 100%;
 }
-.container_ep_i {
-  margin-bottom: 15%;
-}
 </style>
-
 

@@ -48,6 +48,20 @@
             </v-list-tile-content>
           </v-list-tile>
         </router-link>
+        <router-link to="/forum" v-if="nameUser">
+          <v-list-tile class="item">
+            <v-list-tile-content>
+              <v-list-tile-title>Forum</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </router-link>
+        <a v-on:click="logout" v-if="nameUser">
+          <v-list-tile class="item">
+            <v-list-tile-content>
+              <v-list-tile-title>Logout</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </a>
         <router-link to="/about">
           <v-list-tile class="item">
             <v-list-tile-content>
@@ -77,7 +91,7 @@
     <div class="font">
       <h1>Recently updates</h1>
 
-      <v-container v-if="events!=null">
+      <v-container v-if="events !=  null">
         <v-list>
           <template v-for="(event,index) in events.events">
             <v-flex v-if="((getUrl(event.sources[0])))" :key="index">
@@ -98,9 +112,6 @@
               </v-btn>
               <v-toolbar-title>Content Info</v-toolbar-title>
               <v-spacer></v-spacer>
-              <v-toolbar-items>
-                <v-btn dark flat @click="dialog = false">CLOSE</v-btn>
-              </v-toolbar-items>
             </v-toolbar>
             <iframe :src="pressed" frameborder="0" allowfullscreen></iframe>
           </v-card>
@@ -119,6 +130,8 @@
 </template>
 
 <script>
+/* eslint-disable*/
+import firebase from "firebase";
 export default {
   data() {
     return {
@@ -146,6 +159,21 @@ export default {
           return true;
         }
       }
+    },
+    logout() {
+      firebase
+        .auth()
+        .signOut()
+        .then(
+          () => {
+            //we need to change the user in storage to complete the logout
+            this.$store.commit("setUser", null);
+            this.$router.push("/");
+          },
+          function(error) {
+            console.error("Sign Out Error", error);
+          }
+        );
     }
   },
   computed: {
@@ -202,7 +230,7 @@ aside.v-navigation-drawer.v-navigation-drawer--absolute.v-navigation-drawer--ope
 nav.v-toolbar.theme--light {
   background-color: darkgray;
 }
-a.router-link-active {
+a {
   text-decoration: none;
 }
 iframe {

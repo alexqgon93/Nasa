@@ -46,6 +46,13 @@
             </v-list-tile-content>
           </v-list-tile>
         </router-link>
+        <a v-on:click="logout" v-if="nameUser">
+          <v-list-tile class="item">
+            <v-list-tile-content>
+              <v-list-tile-title>Logout</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </a>
         <router-link to="/about">
           <v-list-tile class="item">
             <v-list-tile-content>
@@ -142,6 +149,23 @@ export default {
       selected: "",
       drawer: false
     };
+  },
+  methods: {
+    logout() {
+      firebase
+        .auth()
+        .signOut()
+        .then(
+          () => {
+            //we need to change the user in storage to complete the logout
+            this.$store.commit("setUser", null);
+            this.$router.push("/");
+          },
+          function(error) {
+            console.error("Sign Out Error", error);
+          }
+        );
+    }
   },
   computed: {
     nameUser() {
