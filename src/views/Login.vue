@@ -127,12 +127,16 @@ export default {
       //check if the user is in the data base
       firebase
         .auth()
-        .signInWithEmailAndPassword(this.email, this.password)
+        .signInWithEmailAndPassword(this.email, this.password.toLowerCase())
         .then(() => {
-          alert("User found");
+          this.$store.commit("setUser", this.email);
+          firebase
+            .auth()
+            .setPersistence(firebase.auth.Auth.Persistence.SESSION);
+          this.$router.push("Home");
         })
         .catch(error => {
-          alert("User not found");
+          alert(error);
         });
     },
     login() {
