@@ -81,13 +81,15 @@
             <v-card-title primary-title>
               <div>
                 <h3 class="headline mb-0">Kangaroo Valley Safari</h3>
-                <div>{{ card_text }}</div>
+                <div>Messages to view from the other users</div>
               </div>
             </v-card-title>
 
             <v-card-actions>
-              <!--Need to put anbd unpit so we can talk, diferents user talks--->
-              <v-btn flat color="orange">Send</v-btn>
+              <v-flex xs12 sm6 md3>
+                <v-text-field label="Outline" outline v-model="message"></v-text-field>
+              </v-flex>
+              <v-btn flat color="orange" v-on:click="sendMessage">Send</v-btn>
             </v-card-actions>
           </v-card>
         </v-flex>
@@ -117,13 +119,23 @@ export default {
       email: null,
       photoUrl: null,
       uid: null,
+      message: "",
       card_text:
         "Lorem ipsum dolor sit amet, brute iriure accusata ne mea. Eos suavitate referrentur ad, te duo agam libris qualisque, utroque quaestio accommodare no qui. Et percipit laboramus usu, no invidunt verterem nominati mel. Dolorem ancillae an mei, ut putant invenire splendide mel, ea nec propriae adipisci. Ignota salutandi accusamus in sed, et per malis fuisset, qui id ludus appareat."
     };
   },
   methods: {
-    send() {
-      console.log("Pressed send messages");
+    sendMessage() {
+      let name = firebase.auth().currentUser.displayName;
+
+      let messageToSend = {
+        nombre: name,
+        mensaje: this.message
+      };
+      firebase
+        .database()
+        .ref("forum_s_s")
+        .push(messageToSend);
     },
     logout() {
       firebase

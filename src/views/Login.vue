@@ -60,12 +60,22 @@
     <h1 class="font">Login</h1>
     <v-container>
       <form class="form_s">
-        <v-text-field label="Username" class="labels"></v-text-field>
-        <v-text-field label="Password"></v-text-field>
+        <v-text-field label="Username" class="labels" v-model="email"></v-text-field>
+        <v-text-field
+          v-model="password"
+          :type="show1 ? 'text' : 'password'"
+          name="input-10-1"
+          label="Password"
+        ></v-text-field>
         <div class="en_but">
-          <v-btn>Enter</v-btn>
+          <v-btn v-on:click="enter">Enter</v-btn>
+        </div>
+        <div class="but_log">
           <a v-on:click="login">
             <img src="google_icon.png" class="icon">
+          </a>
+          <a v-on:click="login_face">
+            <img src="facebook_logo.png" class="icon">
           </a>
         </div>
       </form>
@@ -92,10 +102,39 @@ import firebase from "firebase";
 export default {
   data() {
     return {
-      drawer: false
+      drawer: false,
+      show1: false,
+      email: null,
+      password: null
     };
   },
   methods: {
+    login_face() {
+      var provider = new firebase.auth.FacebookAuthProvider();
+      firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then(user => {
+          this.$store.commit("setUser", user);
+          firebase
+            .auth()
+            .setPersistence(firebase.auth.Auth.Persistence.SESSION);
+          this.$router.push("Home");
+        })
+        .catch(error => alert(error));
+    },
+    enter() {
+      //check if the user is in the data base
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(this.email, this.password)
+        .then(() => {
+          alert("User found");
+        })
+        .catch(error => {
+          alert("User not found");
+        });
+    },
     login() {
       var provider = new firebase.auth.GoogleAuthProvider();
       firebase
@@ -103,7 +142,9 @@ export default {
         .signInWithPopup(provider)
         .then(user => {
           this.$store.commit("setUser", user);
-          firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
+          firebase
+            .auth()
+            .setPersistence(firebase.auth.Auth.Persistence.SESSION);
           this.$router.push("Home");
         })
         .catch(error => alert(error));
@@ -171,6 +212,9 @@ a.router-link-active {
 }
 .icon {
   width: 10%;
+}
+.but_log {
+  text-align: center;
 }
 </style>
 
