@@ -71,29 +71,15 @@
         </router-link>
       </v-list>
     </v-navigation-drawer>
-    <v-container>
-      <!-- <div id="mensajes"></div>
-      <input type="text" name="text" v-model="input">
-      <button v-on:click="send">Send</button>-->
-      <v-layout>
-        <v-flex xs12 sm6 offset-sm3>
-          <v-card>
-            <v-card-title primary-title>
-              <div>
-                <h3 class="headline mb-0">Kangaroo Valley Safari</h3>
-                <div>Messages to view from the other users</div>
-              </div>
-            </v-card-title>
-
-            <v-card-actions>
-              <v-flex xs12 sm6 md3>
-                <v-text-field label="Outline" outline v-model="message"></v-text-field>
-              </v-flex>
-              <v-btn flat color="orange" v-on:click="sendMessage">Send</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-flex>
-      </v-layout>
+    <v-container class="chat_whole">
+      <div class="div_chat">
+        <h3 class="headline mb-0">Kangaroo Valley Safari</h3>
+        <div>Messages to view from the other users</div>
+      </div>
+      <v-flex xs12 sm6 md3>
+        <v-text-field label="Outline" outline v-model="message" class="inp"></v-text-field>
+      </v-flex>
+      <v-btn flat color="orange" v-on:click="sendMessage">Send</v-btn>
     </v-container>
     <v-footer height="auto" color="primary lighten-1" class="footer_div">
       <v-layout justify-center row wrap>
@@ -119,9 +105,7 @@ export default {
       email: null,
       photoUrl: null,
       uid: null,
-      message: "",
-      card_text:
-        "Lorem ipsum dolor sit amet, brute iriure accusata ne mea. Eos suavitate referrentur ad, te duo agam libris qualisque, utroque quaestio accommodare no qui. Et percipit laboramus usu, no invidunt verterem nominati mel. Dolorem ancillae an mei, ut putant invenire splendide mel, ea nec propriae adipisci. Ignota salutandi accusamus in sed, et per malis fuisset, qui id ludus appareat."
+      message: ""
     };
   },
   methods: {
@@ -151,12 +135,24 @@ export default {
             console.error("Sign Out Error", error);
           }
         );
+    },
+    getMessages() {
+      firebase
+        .database()
+        .ref("forum_s_s")
+        .on("value", data => {
+          console.log(data.val());
+        });
+      console.log("get");
     }
   },
   computed: {
     nameUser() {
       return this.$store.getters.getUser;
     }
+  },
+  created(){
+    this.getMessages();
   }
 };
 </script>
@@ -206,6 +202,27 @@ a.router-link-active {
   position: absolute;
   bottom: 0;
   width: 100%;
+}
+.theme--light.v-input:not(.v-input--is-disabled) input,
+.theme--light.v-input:not(.v-input--is-disabled) textarea {
+  color: black;
+}
+.chat_div {
+  margin-bottom: 20%;
+}
+.chat_whole {
+  height: 75%;
+}
+.div_chat {
+  background-color: white;
+  opacity: 0.7;
+  border-radius: 5%;
+  height: 93%;
+  border: 1.5px solid black;
+}
+.inp {
+  border-radius: 5%;
+  background-color: white;
 }
 </style>
 
