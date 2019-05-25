@@ -72,14 +72,19 @@
       </v-list>
     </v-navigation-drawer>
     <v-container class="chat_whole">
-      <div class="div_chat">
-        <h3 class="headline mb-0">Kangaroo Valley Safari</h3>
-        <div>Messages to view from the other users</div>
-      </div>
-      <v-flex xs12 sm6 md3>
-        <v-text-field label="Outline" outline v-model="message" class="inp"></v-text-field>
+      <div class="div_chat" id="content_chat"></div>
+      <v-flex xs12 sm6 md3 class="bef_foot">
+        <label>
+          <input
+            v-model="message"
+            value="Write a comment"
+            class="inp"
+            @keyup.enter="sendMessage"
+            id="myInput"
+          >
+        </label>
+        <v-btn flat color="orange" v-on:click="sendMessage">Send</v-btn>
       </v-flex>
-      <v-btn flat color="orange" v-on:click="sendMessage">Send</v-btn>
     </v-container>
     <v-footer height="auto" color="primary lighten-1" class="footer_div">
       <v-layout justify-center row wrap>
@@ -110,6 +115,8 @@ export default {
   },
   methods: {
     sendMessage() {
+      let input = document.getElementById("myInput");
+      input.value = "";
       let name = firebase.auth().currentUser.displayName;
 
       let messageToSend = {
@@ -141,9 +148,38 @@ export default {
         .database()
         .ref("forum_s_s")
         .on("value", data => {
-          console.log(data.val());
+          document.getElementById("content_chat").innerHTML = "";
+          let content = document.getElementById("content_chat");
+          let template = "";
+          var user = firebase.auth().currentUser;
+          for (let key in data.val()) {
+            let element = data.val()[key];
+            //if the message is from the currentuser
+            if (element.nombre == user.displayName) {
+              template += `
+                    <div class="user">
+                        <p class="par_user">${element.mensaje}</p>
+                      </span>
+                    </div>
+            `;
+            } else {
+              template += `
+                      <div class="not_user">
+                        <span>
+                          <p class="par_not_user"> ${element.nombre} ${
+                element.mensaje
+              }</p>
+                        </span>
+                      </div>
+              `;
+            }
+
+            content.innerHTML = template;
+          }
+          document.getElementById(
+            "content_chat"
+          ).scrollTop = document.getElementById("content_chat").scrollHeight;
         });
-      console.log("get");
     }
   },
   computed: {
@@ -151,7 +187,7 @@ export default {
       return this.$store.getters.getUser;
     }
   },
-  created(){
+  created() {
     this.getMessages();
   }
 };
@@ -211,18 +247,57 @@ a.router-link-active {
   margin-bottom: 20%;
 }
 .chat_whole {
-  height: 75%;
+  height: 76%;
+  position: fixed;
 }
 .div_chat {
+  overflow-y: scroll;
   background-color: white;
   opacity: 0.7;
   border-radius: 5%;
-  height: 93%;
+  height: 100%;
   border: 1.5px solid black;
+  scroll-behavior: smooth;
+}
+.bef_foot {
+  margin-bottom: 10%;
 }
 .inp {
-  border-radius: 5%;
   background-color: white;
 }
+input.inp {
+  width: 68%;
+  border-radius: 5%;
+}
+button.v-btn.v-btn--flat.theme--light.orange--text {
+  background-color: saddlebrown;
+}
+.user {
+  color: black;
+  margin-top: 2%;
+  border-radius: 5%;
+  background-color: #dcf8c6;
+  margin-left: 52%;
+  margin-right: 2%;
+  word-break: break-all;
+}
+.not_user {
+  color: black;
+  margin-top: 2%;
+  border-radius: 5%;
+  background-color: #dcf8c6;
+  margin-left: 2%;
+  margin-right: 2%;
+  word-break: break-all;
+}
+.par_user {
+  border: 1px solid black;
+  padding: 1.5%;
+  text-align: start;
+}
+.par_not_user {
+  border: 1px solid black;
+  padding: 1.5%;
+  text-align: start;
+}
 </style>
-
