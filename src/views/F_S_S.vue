@@ -168,16 +168,15 @@ export default {
             `;
             } else {
               template += `
-                      <div class="not_user">
-                        <span>
-                          <p class="par_not_user"> ${element.nombre} ${
-                element.mensaje
-              }</p>
-                        </span>
+                      <div>
+                        <div class="not_user">
+                          <p class="not_know_user">${element.nombre}</p>
+                          <p class="par_not_user">${element.mensaje}</p>
+                        </div>
+                        
                       </div>
               `;
             }
-
             content.innerHTML = template;
           }
           document.getElementById(
@@ -297,6 +296,7 @@ button.v-btn.v-btn--flat.theme--light.orange--text {
   margin-left: 2%;
   margin-right: 43%;
   word-break: break-all;
+  border: 1px solid black;
 }
 .par_user {
   border: 1px solid black;
@@ -305,9 +305,14 @@ button.v-btn.v-btn--flat.theme--light.orange--text {
   border-radius: 3%;
 }
 .par_not_user {
-  border: 1px solid black;
-  padding: 1.5%;
+  margin-top: -9%;
+  margin-left: 1.5%;
   text-align: start;
   border-radius: 3%;
+}
+.not_know_user {
+  color: #075E54;
+  padding: 1.5%;
+  text-size-adjust: 2%;
 }
 </style>

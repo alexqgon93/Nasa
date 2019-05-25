@@ -71,31 +71,24 @@
         </router-link>
       </v-list>
     </v-navigation-drawer>
-    <v-container>
-      <!-- <div id="mensajes"></div>
-      <input type="text" name="text" v-model="input">
-      <button v-on:click="send">Send</button>-->
-      <v-layout>
-        <v-flex xs12 sm6 offset-sm3>
-          <v-card>
-            <v-card-title primary-title>
-              <div>
-                <h3 class="headline mb-0">Inside get the messages from the other users</h3>
-                <div>{{ card_text }}</div>
-              </div>
-            </v-card-title>
-
-            <v-card-actions>
-              <!--Need to put anbd unpit so we can talk, diferents user talks--->
-              <v-btn flat color="orange">Send</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-flex>
-      </v-layout>
+    <v-container class="chat_whole">
+      <div class="div_chat" id="content_chat"></div>
+      <v-flex xs12 sm6 md3 class="bef_foot">
+        <label>
+          <input
+            v-model="message"
+            value="Write a comment"
+            class="inp"
+            @keyup.enter="sendMessage"
+            id="myInput"
+          >
+        </label>
+        <v-btn flat color="orange" v-on:click="sendMessage">Send</v-btn>
+      </v-flex>
     </v-container>
     <v-footer height="auto" color="grey" class="footer_div">
       <v-layout justify-center row wrap>
-        <v-flex primary lighten-2 py-3 text-xs-center white--text xs12>
+        <v-flex py-3 text-xs-center white--text xs12>
           &copy;2019 —
           <strong>NAEGSA</strong>
         </v-flex>
@@ -117,13 +110,27 @@ export default {
       email: null,
       photoUrl: null,
       uid: null,
-      card_text:
-        "Lorem ipsum dolor sit amet, brute iriure accusata ne mea. Eos suavitate referrentur ad, te duo agam libris qualisque, utroque quaestio accommodare no qui. Et percipit laboramus usu, no invidunt verterem nominati mel. Dolorem ancillae an mei, ut putant invenire splendide mel, ea nec propriae adipisci. Ignota salutandi accusamus in sed, et per malis fuisset, qui id ludus appareat."
+      message: ""
     };
   },
   methods: {
-    send() {
-      console.log("Pressed send messages");
+    sendMessage() {
+      //if the input is not empty, to avoid empty messages
+      if (this.message.length > 0) {
+        let input = document.getElementById("myInput");
+        input.value = "";
+        let name = firebase.auth().currentUser.displayName;
+        let messageToSend = {
+          nombre: name,
+          mensaje: this.message
+        };
+        firebase
+          .database()
+          .ref("forum_m_m")
+          .push(messageToSend);
+      } else {
+        alert("Message Field is Empty!!!");
+      }
     },
     logout() {
       firebase
@@ -139,12 +146,52 @@ export default {
             console.error("Sign Out Error", error);
           }
         );
+    },
+    getMessages() {
+      firebase
+        .database()
+        .ref("forum_m_m")
+        .on("value", data => {
+          document.getElementById("content_chat").innerHTML = "";
+          let content = document.getElementById("content_chat");
+          let template = "";
+          var user = firebase.auth().currentUser;
+          for (let key in data.val()) {
+            let element = data.val()[key];
+            //if the message is from the currentuser
+            if (element.nombre == user.displayName) {
+              template += `
+                    <div class="user">
+                        <p class="par_user">${element.mensaje}</p>
+                      </span>
+                    </div>
+            `;
+            } else {
+              template += `
+                      <div>
+                        <div class="not_user">
+                          <p class="not_know_user">${element.nombre}</p>
+                          <p class="par_not_user">${element.mensaje}</p>
+                        </div>
+                        
+                      </div>
+              `;
+            }
+            content.innerHTML = template;
+          }
+          document.getElementById(
+            "content_chat"
+          ).scrollTop = document.getElementById("content_chat").scrollHeight;
+        });
     }
   },
   computed: {
     nameUser() {
       return this.$store.getters.getUser;
     }
+  },
+  created() {
+    this.getMessages();
   }
 };
 </script>
@@ -195,5 +242,76 @@ a.router-link-active {
   bottom: 0;
   width: 100%;
 }
+.theme--light.v-input:not(.v-input--is-disabled) input,
+.theme--light.v-input:not(.v-input--is-disabled) textarea {
+  color: black;
+}
+.primary {
+  background-color: darkgray;
+  border-color: darkgray;
+}
+.chat_div {
+  margin-bottom: 20%;
+}
+.chat_whole {
+  height: 76%;
+  position: fixed;
+}
+.div_chat {
+  overflow-y: scroll;
+  background-color: #ece5dd;
+  opacity: 0.9;
+  border-radius: 3%;
+  height: 100%;
+  border: 1.5px solid black;
+  scroll-behavior: smooth;
+}
+.bef_foot {
+  margin-bottom: 10%;
+}
+.inp {
+  background-color: white;
+}
+input.inp {
+  width: 68%;
+  border-radius: 5%;
+}
+button.v-btn.v-btn--flat.theme--light.orange--text {
+  background-color: saddlebrown;
+}
+.user {
+  color: black;
+  margin-top: 2%;
+  border-radius: 5%;
+  background-color: #dcf8c6;
+  margin-left: 52%;
+  margin-right: 2%;
+  word-break: break-all;
+}
+.not_user {
+  color: black;
+  margin-top: 2%;
+  border-radius: 5%;
+  background-color: floralwhite;
+  margin-left: 2%;
+  margin-right: 43%;
+  word-break: break-all;
+  border: 1px solid black;
+}
+.par_user {
+  border: 1px solid black;
+  padding: 1.5%;
+  text-align: start;
+  border-radius: 3%;
+}
+.par_not_user {
+  margin-top: -9%;
+  margin-left: 1.5%;
+  text-align: start;
+  border-radius: 3%;
+}
+.not_know_user {
+  color: #075E54;
+  padding: 1.5%;
+}
 </style>
-
