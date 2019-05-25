@@ -55,6 +55,13 @@
             </v-list-tile-content>
           </v-list-tile>
         </router-link>
+        <router-link to="/forum" v-if="nameUser">
+          <v-list-tile class="item">
+            <v-list-tile-content>
+              <v-list-tile-title>Forum</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </router-link>
         <a v-on:click="logout" v-if="nameUser">
           <v-list-tile class="item">
             <v-list-tile-content>
@@ -77,9 +84,9 @@
         class="p_day_div"
       >The purpose of this app is focused to give the opportunity to those who likes to be in contact with space information and wants to be connected and enjoy with perfect pictures, news about the catastrophic issues, and get to know information about the systems that provides the information that we are able to show. We do not own the rights to the Api's we have taken the info from. All the API's can be found in the NASA official.</p>
     </v-container>
-    <v-footer height="auto" color="primary lighten-1" class="footer_div">
+    <v-footer height="auto" color="grey" class="footer_div">
       <v-layout justify-center row wrap>
-        <v-flex primary lighten-2 py-3 text-xs-center white--text xs12>
+        <v-flex py-3 text-xs-center white--text xs12>
           &copy;2019 —
           <strong>NAEGSA</strong>
         </v-flex>

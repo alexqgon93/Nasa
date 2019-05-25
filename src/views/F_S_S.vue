@@ -86,9 +86,9 @@
         <v-btn flat color="orange" v-on:click="sendMessage">Send</v-btn>
       </v-flex>
     </v-container>
-    <v-footer height="auto" color="primary lighten-1" class="footer_div">
+    <v-footer height="auto" color="grey" class="footer_div">
       <v-layout justify-center row wrap>
-        <v-flex primary lighten-2 py-3 text-xs-center white--text xs12>
+        <v-flex py-3 text-xs-center white--text xs12>
           &copy;2019 —
           <strong>NAEGSA</strong>
         </v-flex>
@@ -115,18 +115,22 @@ export default {
   },
   methods: {
     sendMessage() {
-      let input = document.getElementById("myInput");
-      input.value = "";
-      let name = firebase.auth().currentUser.displayName;
-
-      let messageToSend = {
-        nombre: name,
-        mensaje: this.message
-      };
-      firebase
-        .database()
-        .ref("forum_s_s")
-        .push(messageToSend);
+      //if the input is not empty, to avoid empty messages
+      if (this.message.length > 0) {
+        let input = document.getElementById("myInput");
+        input.value = "";
+        let name = firebase.auth().currentUser.displayName;
+        let messageToSend = {
+          nombre: name,
+          mensaje: this.message
+        };
+        firebase
+          .database()
+          .ref("forum_s_s")
+          .push(messageToSend);
+      } else {
+        alert("Message Field is Empty!!!");
+      }
     },
     logout() {
       firebase
@@ -243,6 +247,10 @@ a.router-link-active {
 .theme--light.v-input:not(.v-input--is-disabled) textarea {
   color: black;
 }
+.primary {
+  background-color: darkgray;
+  border-color: darkgray;
+}
 .chat_div {
   margin-bottom: 20%;
 }
@@ -252,9 +260,9 @@ a.router-link-active {
 }
 .div_chat {
   overflow-y: scroll;
-  background-color: white;
-  opacity: 0.7;
-  border-radius: 5%;
+  background-color: #ece5dd;
+  opacity: 0.9;
+  border-radius: 3%;
   height: 100%;
   border: 1.5px solid black;
   scroll-behavior: smooth;
@@ -285,19 +293,21 @@ button.v-btn.v-btn--flat.theme--light.orange--text {
   color: black;
   margin-top: 2%;
   border-radius: 5%;
-  background-color: #dcf8c6;
+  background-color: floralwhite;
   margin-left: 2%;
-  margin-right: 2%;
+  margin-right: 43%;
   word-break: break-all;
 }
 .par_user {
   border: 1px solid black;
   padding: 1.5%;
   text-align: start;
+  border-radius: 3%;
 }
 .par_not_user {
   border: 1px solid black;
   padding: 1.5%;
   text-align: start;
+  border-radius: 3%;
 }
 </style>

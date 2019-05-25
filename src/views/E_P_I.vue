@@ -48,6 +48,13 @@
             </v-list-tile-content>
           </v-list-tile>
         </router-link>
+        <router-link to="/forum" v-if="nameUser">
+          <v-list-tile class="item">
+            <v-list-tile-content>
+              <v-list-tile-title>Forum</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </router-link>
         <a v-on:click="logout" v-if="nameUser">
           <v-list-tile class="item">
             <v-list-tile-content>
@@ -74,9 +81,9 @@
     <v-container class="container_ep_i">
       <v-img src="epic_camera.jpg"/>
     </v-container>
-    <v-footer height="auto" color="primary lighten-1" class="footer_div">
+    <v-footer height="auto" color="grey" class="footer_div">
       <v-layout justify-center row wrap>
-        <v-flex primary lighten-2 py-3 text-xs-center white--text xs12>
+        <v-flex py-3 text-xs-center white--text xs12>
           &copy;2019 —
           <strong>NAEGSA</strong>
         </v-flex>
@@ -94,7 +101,7 @@ export default {
       drawer: false
     };
   },
-  methods:{
+  methods: {
     logout() {
       firebase
         .auth()

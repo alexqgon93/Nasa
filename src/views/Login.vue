@@ -86,7 +86,7 @@
         <v-btn depressed small color="primary">Register</v-btn>
       </router-link>
     </div>
-    <v-footer height="auto" color="primary lighten-1" class="footer_div">
+    <v-footer height="auto" color="grey" class="footer_div">
       <v-layout justify-center row wrap>
         <v-flex primary lighten-2 py-3 text-xs-center white--text xs12>
           &copy;2019 —

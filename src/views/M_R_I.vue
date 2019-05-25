@@ -46,6 +46,13 @@
             </v-list-tile-content>
           </v-list-tile>
         </router-link>
+        <router-link to="/forum" v-if="nameUser">
+          <v-list-tile class="item">
+            <v-list-tile-content>
+              <v-list-tile-title>Forum</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </router-link>
         <a v-on:click="logout" v-if="nameUser">
           <v-list-tile class="item">
             <v-list-tile-content>
@@ -146,7 +153,7 @@
       <v-btn color="info" v-if="!show_4" v-on:click="showlm">Read More</v-btn>
       <v-btn color="info" v-if="show_4" v-on:click="showlm">Read Less</v-btn>
     </v-container>
-    <v-footer height="auto" color="primary lighten-1" class="footer_div">
+    <v-footer height="auto" color="grey" class="footer_div">
       <v-layout justify-center row wrap>
         <v-flex primary lighten-2 py-3 text-xs-center white--text xs12>
           &copy;2019 —

@@ -48,6 +48,13 @@
             </v-list-tile-content>
           </v-list-tile>
         </router-link>
+        <router-link to="/forum" v-if="nameUser">
+          <v-list-tile class="item">
+            <v-list-tile-content>
+              <v-list-tile-title>Forum</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </router-link>
         <a v-on:click="logout" v-if="nameUser">
           <v-list-tile class="item">
             <v-list-tile-content>
@@ -75,9 +82,9 @@
       <h2>choose natural images or enhanched</h2>
       <v-select label="Type of Pictures" :items="dropdown_font"></v-select>
     </v-container>
-    <v-footer height="auto" color="primary lighten-1" class="footer_div">
+    <v-footer height="auto" color="grey" class="footer_div">
       <v-layout justify-center row wrap>
-        <v-flex primary lighten-2 py-3 text-xs-center white--text xs12>
+        <v-flex py-3 text-xs-center white--text xs12>
           &copy;2019 —
           <strong>NAEGSA</strong>
         </v-flex>
