@@ -56,11 +56,18 @@ export default new Vuex.Store({
         .then(data => {
           context.commit("setEvents", data);
         });
-      fetch(context.state.url_mars_pan + context.state.key)
+      fetch("https://mars-photos.herokuapp.com/api/v1/rovers/Spirit/photos?sol=2")
         .then(r => r.json())
         .then(data => {
-          context.commit("setMarsPan", data);
+          console.log(data.photos);
+          context.commit("setMarsPan", data.photos);
         });
+
+      // fetch(context.state.url_mars_pan + context.state.key)
+      //   .then(r => r.json())
+      //   .then(data => {
+      //     context.commit("setMarsPan", data);
+      //   });
     },
   }
 });

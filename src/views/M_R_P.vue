@@ -79,7 +79,7 @@
       </router-link>
     </div>
     <v-carousel hide-delimiters>
-      <v-carousel-item v-for="(item,i) in getPictures" :key="i" :src="item.src"></v-carousel-item>
+      <v-carousel-item v-for="(item,i) in getPictures" :key="i" :src="item.img_src"></v-carousel-item>
     </v-carousel>
 
     <v-footer height="auto" color="grey" class="footer_div">
