@@ -6,6 +6,7 @@ import Epic from "./views/E_P.vue";
 import Epic_Info from "./views/E_P_I.vue";
 import Login from "./views/Login.vue";
 import Sign_Up from "./views/Sign_Up.vue";
+import Mars_Rover_Pictures from "./views/M_R_P.vue";
 import Mars_Rover_Info from "./views/M_R_I.vue";
 import Forum from "./views/Forum.vue";
 import F_S_S from "./views/F_S_S.vue";
@@ -37,6 +38,11 @@ export default new Router({
       path: "/e_i",
       name: "epic_info",
       component: Epic_Info
+    },
+    {
+      path: "/m_r_p",
+      name: "mars_rover_pictures",
+      component: Mars_Rover_Pictures
     },
     {
       path: "/m_r_i",

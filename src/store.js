@@ -10,10 +10,11 @@ export default new Vuex.Store({
     key: "CpOCSUpd1nY7lphH0kgr0xweoNBQ7cGKrFia1cTy",
     url_natural: "https://epic.gsfc.nasa.gov/api/natural",
     url_enhanched: "https://epic.gsfc.nasa.gov/api/enhanced",
-    url_mars: "https://api.nasa.gov/mars-photos/api/v1/rovers/opportunity/photos?sol=1&page=1&camera=PANCAM&api_key=",
+    url_mars_pan: "https://api.nasa.gov/mars-photos/api/v1/rovers/opportunity/photos?sol=1000&camera=PANCAM&api_key=",
     data: null,
     events: null,
     user: null,
+    mars: null,
   },
   mutations: {
     setData(state, payload) {
@@ -25,6 +26,9 @@ export default new Vuex.Store({
     setUser(state, payload) {
       state.user = payload;
     },
+    setMarsPan(state, payload) {
+      state.mars = payload;
+    }
   },
   getters: {
     getData: (state) => {
@@ -35,6 +39,9 @@ export default new Vuex.Store({
     },
     getUser: (state) => {
       return state.user;
+    },
+    getMarsPan: (state) => {
+      return state.mars;
     }
   },
   actions: {
@@ -48,6 +55,11 @@ export default new Vuex.Store({
         .then(r => r.json())
         .then(data => {
           context.commit("setEvents", data);
+        });
+      fetch(context.state.url_mars_pan + context.state.key)
+        .then(r => r.json())
+        .then(data => {
+          context.commit("setMarsPan", data);
         });
     },
   }

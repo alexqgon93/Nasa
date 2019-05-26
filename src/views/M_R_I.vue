@@ -3,7 +3,7 @@
     <!--First the nav bar--->
     <v-toolbar>
       <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title class="white--text">About Us</v-toolbar-title>
+      <v-toolbar-title class="white--text">Vehicle Rover</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn icon>
         <v-img v-if="nameUser" :src="nameUser.photoURL"></v-img>
@@ -155,7 +155,7 @@
     </v-container>
     <v-footer height="auto" color="grey" class="footer_div">
       <v-layout justify-center row wrap>
-        <v-flex primary lighten-2 py-3 text-xs-center white--text xs12>
+        <v-flex py-3 text-xs-center white--text xs12>
           &copy;2019 —
           <strong>NAEGSA</strong>
         </v-flex>

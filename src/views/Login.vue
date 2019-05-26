@@ -60,7 +60,7 @@
     <h1 class="font">Login</h1>
     <v-container>
       <form class="form_s">
-        <v-text-field label="Username" class="labels" v-model="email"></v-text-field>
+        <v-text-field label="Email" class="labels" v-model="email" style="color: white"></v-text-field>
         <v-text-field
           v-model="password"
           :type="show1 ? 'text' : 'password'"
@@ -181,7 +181,7 @@ export default {
 }
 .v-list.theme--dark {
   background-color: lightsteelblue;
-  color: black;
+  color: white;
 }
 .pa-0 {
   margin-top: 10%;
@@ -219,6 +219,12 @@ a.router-link-active {
 }
 .but_log {
   text-align: center;
+}
+.labels {
+  color: white;
+}
+.v-input__slot {
+  color: purple;
 }
 </style>
 
