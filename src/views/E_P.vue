@@ -1,5 +1,5 @@
 <template>
-  <div class="exterior_1" v-if="(natural != null)&&(enhanched!=null)">
+  <div class="exterior_1" v-if="(natural != null)&&(enhanced!=null)">
     <!--First the nav bar--->
     <v-toolbar>
       <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
@@ -97,8 +97,6 @@
 export default {
   data() {
     return {
-      natural: null,
-      enhanched: null,
       dropdown_font: ["natural", "enhanched"],
       drawer: false
     };
@@ -138,6 +136,12 @@ export default {
   computed: {
     nameUser() {
       return this.$store.getters.getUser;
+    },
+    natural() {
+      return this.$store.getters.getNatural;
+    },
+    enhanced() {
+      return this.$store.getters.getEnhanced;
     }
   }
 };

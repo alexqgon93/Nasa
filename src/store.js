@@ -9,14 +9,14 @@ export default new Vuex.Store({
     url_events: "https://eonet.sci.gsfc.nasa.gov/api/v2.1/events",
     key: "CpOCSUpd1nY7lphH0kgr0xweoNBQ7cGKrFia1cTy",
     url_natural: "https://epic.gsfc.nasa.gov/api/natural",
-    url_enhanched: "https://epic.gsfc.nasa.gov/api/enhanced",
+    url_enhanced: "https://epic.gsfc.nasa.gov/api/enhanced",
     url_mars_pan: "https://api.nasa.gov/mars-photos/api/v1/rovers/opportunity/photos?sol=1000&camera=PANCAM&api_key=",
     data: null,
     events: null,
     user: null,
     mars: null,
     natural_dates: null,
-    enhanched_dates: null,
+    enhanced_dates: null,
   },
   mutations: {
     setData(state, payload) {
@@ -31,11 +31,11 @@ export default new Vuex.Store({
     setMarsPan(state, payload) {
       state.mars = payload;
     },
-    setNaturalDate(state, payload) {
+    setNatural(state, payload) {
       state.natural_dates = payload;
     },
-    setEnhanchedDate(state, payload) {
-      state.enhanched_dates = payload;
+    setEnhanced(state, payload) {
+      state.enhanced_dates = payload;
     }
   },
   getters: {
@@ -50,6 +50,12 @@ export default new Vuex.Store({
     },
     getMarsPan: (state) => {
       return state.mars;
+    },
+    getNatural: (state) => {
+      return state.natural_dates;
+    },
+    getEnhanced: (state) => {
+      return state.enhanced_dates;
     }
   },
   actions: {
@@ -67,12 +73,12 @@ export default new Vuex.Store({
       fetch(context.state.url_natural)
         .then(r => r.json())
         .then(data => {
-          context.commit("setNaturalDate", data);
+          context.commit("setNatural", data);
         });
-      fetch(context.state.url_enhanched)
+      fetch(context.state.url_enhanced)
         .then(r => r.json())
         .then(data => {
-          context.commit("setEnhanchedDate", data);
+          context.commit("setEnhanced", data);
         });
       fetch("https://mars-photos.herokuapp.com/api/v1/rovers/Spirit/photos?sol=2")
         .then(r => r.json())
