@@ -1,22 +1,24 @@
 {
-    "short_name": "Nasa App",
-    "name": "Nasa Aplication for fun",
-    "icons": [
-      {
-        "src": "NASA-Logo.png",
-        "type": "image/png",
-        "sizes": "48x48"
-      },
-      {
-        "src": "NASA-Logo.png",
-        "type": "image/png",
-        "sizes": "96x96"
-      },
-      {
-        "src": "NASA-Logo.png",
-        "type": "image/png",
-        "sizes": "192x192"
-      }
-    ],
-    "start_url": "/"
-  }
+  "short_name": "Nasa App",
+  "name": "Nasa Aplication for fun",
+  "icons": [
+    {
+      "src": "NASA-Logo.png",
+      "type": "image/png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "NASA-Logo.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "NASA-Logo.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#2196F3",
+  "display": "standalone"
+}
