@@ -226,6 +226,10 @@ a.router-link-active {
 .v-input__slot {
   color: purple;
 }
+.theme--light.v-input:not(.v-input--is-disabled) input,
+.theme--light.v-input:not(.v-input--is-disabled) textarea {
+  color: white !important;
+}
 </style>
 
 

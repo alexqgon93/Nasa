@@ -15,6 +15,8 @@ export default new Vuex.Store({
     events: null,
     user: null,
     mars: null,
+    natural_dates: null,
+    enhanched_dates: null,
   },
   mutations: {
     setData(state, payload) {
@@ -28,6 +30,12 @@ export default new Vuex.Store({
     },
     setMarsPan(state, payload) {
       state.mars = payload;
+    },
+    setNaturalDate(state, payload) {
+      state.natural_dates = payload;
+    },
+    setEnhanchedDate(state, payload) {
+      state.enhanched_dates = payload;
     }
   },
   getters: {
@@ -56,18 +64,21 @@ export default new Vuex.Store({
         .then(data => {
           context.commit("setEvents", data);
         });
+      fetch(context.state.url_natural)
+        .then(r => r.json())
+        .then(data => {
+          context.commit("setNaturalDate", data);
+        });
+      fetch(context.state.url_enhanched)
+        .then(r => r.json())
+        .then(data => {
+          context.commit("setEnhanchedDate", data);
+        });
       fetch("https://mars-photos.herokuapp.com/api/v1/rovers/Spirit/photos?sol=2")
         .then(r => r.json())
         .then(data => {
-          console.log(data.photos);
           context.commit("setMarsPan", data.photos);
         });
-
-      // fetch(context.state.url_mars_pan + context.state.key)
-      //   .then(r => r.json())
-      //   .then(data => {
-      //     context.commit("setMarsPan", data);
-      //   });
     },
   }
 });

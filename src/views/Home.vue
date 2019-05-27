@@ -212,6 +212,9 @@ export default {
 }
 .v-list.theme--light {
   margin-bottom: 15%;
+  opacity: 0.8;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
 }
 .pa-0 {
   margin-top: 10%;
