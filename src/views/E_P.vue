@@ -80,7 +80,7 @@
     </div>
     <v-container class="p_day_div">
       <h2>choose natural images or enhanched</h2>
-      <v-select label="Type of Pictures" :items="dropdown_font"></v-select>
+      <v-select label="Type of Pictures" :items="dropdown_font" class="drop"></v-select>
     </v-container>
     <v-footer height="auto" color="grey" class="footer_div">
       <v-layout justify-center row wrap>
@@ -102,18 +102,6 @@ export default {
     };
   },
   methods: {
-    getData() {
-      fetch(this.$store.state.url_natural)
-        .then(r => r.json())
-        .then(data => {
-          this.natural = data;
-        });
-      fetch(this.$store.state.url_enhanched)
-        .then(r => r.json())
-        .then(data => {
-          this.enhanched = data;
-        });
-    },
     logout() {
       firebase
         .auth()
@@ -129,9 +117,6 @@ export default {
           }
         );
     }
-  },
-  created() {
-    this.getData();
   },
   computed: {
     nameUser() {
@@ -191,6 +176,9 @@ a.router-link-active {
   position: absolute;
   bottom: 0;
   width: 100%;
+}
+.theme--light.v-select .v-select__selections {
+  color: white !important;
 }
 </style>
 
