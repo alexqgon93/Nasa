@@ -71,35 +71,28 @@
         </router-link>
       </v-list>
     </v-navigation-drawer>
-    <h1 class="font">Epic images of the Earth</h1>
-    <h2 class="font">Info of the camera:</h2>
-    <div class="en_but">
-      <router-link to="/e_i">
-        <v-btn depressed small color="primary">EPIC (Earth Polychromatic Imaging Camera)</v-btn>
-      </router-link>
-    </div>
+    <h1 class="font">Date selected</h1>
+    <h2 class="font">{{date_selected}}</h2>
     <v-container class="p_day_div">
       <h2>choose natural images or enhanched</h2>
       <v-select label="Type of Pictures" :items="dropdown_font" class="drop" v-model="pictures"></v-select>
     </v-container>
 
     <v-container v-if="pictures ==  'natural'">
-      <h1 class="font">natural</h1>
       <v-list>
         <template v-for="(event,index) in natural">
           <v-flex v-if="event.date" :key="index">
-            <a dark v-on:click="pressed=event.date">{{event.date}}</a>
+            <a dark @click="dialog = true" v-on:click="date">{{event.date}}</a>
           </v-flex>
         </template>
       </v-list>
     </v-container>
 
     <v-container v-if="pictures ==  'enhanced'">
-      <h1 class="font">enhanced</h1>
       <v-list>
         <template v-for="(event,index) in enhanced">
           <v-flex v-if="event.date" :key="index">
-            <a dark v-on:click="pressed=event.date">{{event.date}}</a>
+            <a dark @click="dialog = true" v-on:click="date = event.date">{{event.date}}</a>
           </v-flex>
         </template>
       </v-list>
@@ -121,6 +114,7 @@ export default {
   data() {
     return {
       dropdown_font: ["natural", "enhanced"],
+      dialog: false,
       drawer: false,
       pictures: null,
       pressed: null
@@ -153,13 +147,8 @@ export default {
     enhanced() {
       return this.$store.getters.getEnhanced;
     },
-    //function that will save the value of the atribute date of the store
-    //to get the infoamtion of the date pressed the new component
-    date() {
-      if (this.pressed != null) {
-        this.$store.commit("setDate", this.pressed);
-        this.$router.push("/e_p_2");
-      }
+    date_selected() {
+      return this.$store.getters.getDate;
     }
   }
 };

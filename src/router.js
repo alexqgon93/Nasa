@@ -3,6 +3,7 @@ import Router from "vue-router";
 import Welcome from "./views/Welcome.vue";
 import Home from "./views/Home.vue";
 import Epic from "./views/E_P.vue";
+import Epic_2 from "./views/E_P_2.vue";
 import Epic_Info from "./views/E_P_I.vue";
 import Login from "./views/Login.vue";
 import Sign_Up from "./views/Sign_Up.vue";
@@ -33,6 +34,11 @@ export default new Router({
       path: "/e_p",
       name: "epic",
       component: Epic
+    },
+    {
+      path: "/e_p_2",
+      name: "epic_2",
+      component: Epic_2
     },
     {
       path: "/e_i",

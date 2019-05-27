@@ -8,7 +8,7 @@ export default new Vuex.Store({
     url: "https://api.nasa.gov/planetary/apod?api_key=",
     url_events: "https://eonet.sci.gsfc.nasa.gov/api/v2.1/events",
     key: "CpOCSUpd1nY7lphH0kgr0xweoNBQ7cGKrFia1cTy",
-    url_natural: "https://epic.gsfc.nasa.gov/api/natural",
+    url_natural: "https://epic.gsfc.nasa.gov/api/natural/all",
     url_enhanced: "https://epic.gsfc.nasa.gov/api/enhanced",
     url_mars_pan: "https://api.nasa.gov/mars-photos/api/v1/rovers/opportunity/photos?sol=1000&camera=PANCAM&api_key=",
     data: null,
@@ -17,6 +17,7 @@ export default new Vuex.Store({
     mars: null,
     natural_dates: null,
     enhanced_dates: null,
+    date: null
   },
   mutations: {
     setData(state, payload) {
@@ -36,6 +37,9 @@ export default new Vuex.Store({
     },
     setEnhanced(state, payload) {
       state.enhanced_dates = payload;
+    },
+    setDate(state, payload) {
+      state.date = payload;
     }
   },
   getters: {
@@ -56,6 +60,9 @@ export default new Vuex.Store({
     },
     getEnhanced: (state) => {
       return state.enhanced_dates;
+    },
+    getDate: (state) => {
+      return state.date;
     }
   },
   actions: {
