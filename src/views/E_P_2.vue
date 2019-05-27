@@ -72,31 +72,8 @@
       </v-list>
     </v-navigation-drawer>
     <h1 class="font">Date selected</h1>
-    <h2 class="font">{{date_selected}}</h2>
-    <v-container class="p_day_div">
-      <h2>choose natural images or enhanched</h2>
-      <v-select label="Type of Pictures" :items="dropdown_font" class="drop" v-model="pictures"></v-select>
-    </v-container>
-
-    <v-container v-if="pictures ==  'natural'">
-      <v-list>
-        <template v-for="(event,index) in natural">
-          <v-flex v-if="event.date" :key="index">
-            <a dark @click="dialog = true" v-on:click="date">{{event.date}}</a>
-          </v-flex>
-        </template>
-      </v-list>
-    </v-container>
-
-    <v-container v-if="pictures ==  'enhanced'">
-      <v-list>
-        <template v-for="(event,index) in enhanced">
-          <v-flex v-if="event.date" :key="index">
-            <a dark @click="dialog = true" v-on:click="date = event.date">{{event.date}}</a>
-          </v-flex>
-        </template>
-      </v-list>
-    </v-container>
+    <h1 class="font_date">{{date_selected}}</h1>
+    
     <v-footer height="auto" color="grey" class="footer_div">
       <v-layout justify-center row wrap>
         <v-flex py-3 text-xs-center white--text xs12>
@@ -113,14 +90,20 @@ import firebase from "firebase";
 export default {
   data() {
     return {
-      dropdown_font: ["natural", "enhanced"],
-      dialog: false,
       drawer: false,
       pictures: null,
-      pressed: null
+      en_hours: "https://epic.gsfc.nasa.gov/api/enhanced/date/",
+      na_hours:"https://epic.gsfc.nasa.gov/api/natural/date/"
     };
   },
   methods: {
+    getHours(){
+      fetch(this.en_hours+ date_selected)
+      .then(r=>r.json())
+      .then(data=> {
+        console.log(data)
+        });
+    },
     logout() {
       firebase
         .auth()
@@ -150,6 +133,9 @@ export default {
     date_selected() {
       return this.$store.getters.getDate;
     }
+  },
+  created(){
+    this.getHours();
   }
 };
 </script>
@@ -201,6 +187,10 @@ a.router-link-active {
 }
 .theme--light.v-select .v-select__selections {
   color: white !important;
+}
+.font_date {
+  color: crimson;
+  text-align: center;
 }
 </style>
 

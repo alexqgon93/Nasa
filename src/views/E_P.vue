@@ -84,7 +84,6 @@
     </v-container>
 
     <v-container v-if="pictures ==  'natural'">
-      <h1 class="font">natural</h1>
       <v-list>
         <template v-for="(event,index) in natural">
           <v-flex v-if="event.date" :key="index">
@@ -95,7 +94,6 @@
     </v-container>
 
     <v-container v-if="pictures ==  'enhanced'">
-      <h1 class="font">enhanced</h1>
       <v-list>
         <template v-for="(event,index) in enhanced">
           <v-flex v-if="event.date" :key="index">
