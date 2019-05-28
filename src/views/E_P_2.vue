@@ -78,17 +78,11 @@
       <v-list>
         <template v-for="(event,index) in hours">
           <v-flex v-if="event.date" :key="index">
-            <a dark v-on:click="getDates(event.image)">{{event.date}}</a>
+            <a dark v-on:click="getDates(event.image)" @click="dialog = true">{{event.date}}</a>
           </v-flex>
         </template>
       </v-list>
-      <v-dialog
-        v-model="dialog"
-        fullscreen
-        hide-overlay
-        transition="dialog-bottom-transition"
-        v-if="url!=null"
-      >
+      <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
         <v-card>
           <v-toolbar dark color="primary">
             <v-btn icon dark @click="dialog = false">
@@ -237,6 +231,9 @@ a.router-link-active {
 .font_date {
   color: crimson;
   text-align: center;
+}
+iframe>img{
+  width: 100%;
 }
 </style>
 
