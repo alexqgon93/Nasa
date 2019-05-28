@@ -3,17 +3,17 @@
   "name": "Nasa Aplication for fun",
   "icons": [
     {
-      "src": "nasa_logo.jpg",
+      "src": "nasa_logo.png",
       "type": "image/png",
       "sizes": "48x48"
     },
     {
-      "src": "nasa_logo.jpg",
+      "src": "nasa_logo.png",
       "type": "image/png",
       "sizes": "96x96"
     },
     {
-      "src": "nasa_logo.jpg",
+      "src": "nasa_logo.png",
       "type": "image/png",
       "sizes": "192x192"
     }
