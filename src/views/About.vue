@@ -144,6 +144,8 @@ export default {
 .p_day_div {
   color: white;
   text-align: justify;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.2em;
 }
 .font {
   color: white;

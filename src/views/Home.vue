@@ -85,7 +85,7 @@
         </v-img>
       </v-container>
       <v-container>
-        <p>{{data.explanation}}</p>
+        <p class="p_day_div">{{data.explanation}}</p>
       </v-container>
     </div>
     <div class="font">
@@ -201,6 +201,8 @@ export default {
 .p_day_div {
   color: white;
   text-align: justify;
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.1em;
 }
 .font {
   color: white;

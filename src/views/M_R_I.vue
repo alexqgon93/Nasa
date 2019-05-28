@@ -135,7 +135,7 @@
       <v-btn color="info" v-if="show_3" v-on:click="showml">Read Less</v-btn>
       <h2 class="font">Communication</h2>
       <v-container>
-        <v-img src="rover_cam.jpg" aspect-ratio="1" class="com_img">
+        <v-img src="rover_cam.JPG" aspect-ratio="1" class="com_img">
           <template v-slot:placeholder>
             <v-layout fill-height align-center justify-center ma-0>
               <v-progress-circular indeterminate color="blue"></v-progress-circular>
@@ -261,7 +261,8 @@ a.router-link-active {
   width: 100%;
 }
 .com_img {
-  width: 200px;
+  width: 100%;
+  padding-bottom: 31%;
 }
 </style>
 

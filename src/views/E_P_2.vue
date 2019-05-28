@@ -82,6 +82,24 @@
           </v-flex>
         </template>
       </v-list>
+      <v-dialog
+        v-model="dialog"
+        fullscreen
+        hide-overlay
+        transition="dialog-bottom-transition"
+        v-if="url!=null"
+      >
+        <v-card>
+          <v-toolbar dark color="primary">
+            <v-btn icon dark @click="dialog = false">
+              <v-icon>close</v-icon>
+            </v-btn>
+            <v-toolbar-title>Content Info</v-toolbar-title>
+            <v-spacer></v-spacer>
+          </v-toolbar>
+          <iframe :src="url" frameborder="0" allowfullscreen></iframe>
+        </v-card>
+      </v-dialog>
     </v-container>
 
     <v-footer height="auto" color="grey" class="footer_div">
@@ -100,33 +118,26 @@ import firebase from "firebase";
 export default {
   data() {
     return {
+      dialog: false,
       drawer: false,
       en_hours: "https://epic.gsfc.nasa.gov/api/enhanced/date/",
       na_hours: "https://epic.gsfc.nasa.gov/api/natural/date/",
       pic: "https://epic.gsfc.nasa.gov/archive/",
       hours: null,
-      pressed: null
+      pressed: null,
+      url: null
     };
   },
   methods: {
     getDates(foto) {
       if (this.pictures == "natural") {
         let date = this.date_selected.split("-").join("/");
-        // console.log(
-        //   this.pic + this.pictures + "/" + date + "/png/" + foto + ".png"
-        // );
-        fetch(this.pic + this.pictures + "/" + date + "/png/" + foto + ".png")
-          .then(r => r.json())
-          .then(data => {
-            console.log(data);
-          });
+        this.url =
+          this.pic + this.pictures + "/" + date + "/png/" + foto + ".png";
       } else {
         let date = this.date_selected.split("-").join("/");
-        fetch(this.pic + this.pictures + "/" + date + "/png/" + foto + ".png")
-          .then(r => r.json())
-          .then(data => {
-            console.log(data);
-          });
+        this.url =
+          this.pic + this.pictures + "/" + date + "/png/" + foto + ".png";
       }
     },
     getHours() {
