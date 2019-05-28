@@ -17,6 +17,7 @@ export default new Vuex.Store({
     mars: null,
     natural_dates: null,
     enhanced_dates: null,
+    option: null,
     date: null
   },
   mutations: {
@@ -40,6 +41,9 @@ export default new Vuex.Store({
     },
     setDate(state, payload) {
       state.date = payload;
+    },
+    setOption(state, payload) {
+      state.option = payload;
     }
   },
   getters: {
@@ -63,6 +67,9 @@ export default new Vuex.Store({
     },
     getDate: (state) => {
       return state.date;
+    },
+    getOption: (state) => {
+      return state.option;
     }
   },
   actions: {

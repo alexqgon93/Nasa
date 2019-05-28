@@ -87,7 +87,7 @@
       <v-list>
         <template v-for="(event,index) in natural">
           <v-flex v-if="event.date" :key="index">
-            <a dark v-on:click="pressed=event.date">{{event.date}}</a>
+            <a dark v-on:click="sendDate(event.date)">{{event.date}}</a>
           </v-flex>
         </template>
       </v-list>
@@ -97,7 +97,7 @@
       <v-list>
         <template v-for="(event,index) in enhanced">
           <v-flex v-if="event.date" :key="index">
-            <a dark v-on:click="pressed=event.date">{{event.date}}</a>
+            <a dark v-on:click="sendDate(event.date)">{{event.date}}</a>
           </v-flex>
         </template>
       </v-list>
@@ -139,6 +139,11 @@ export default {
             console.error("Sign Out Error", error);
           }
         );
+    },
+    sendDate(date) {
+      this.$store.commit("setOption", this.pictures);
+      this.$store.commit("setDate", date);
+      this.$router.push("/e_p_2");
     }
   },
   computed: {
@@ -150,14 +155,6 @@ export default {
     },
     enhanced() {
       return this.$store.getters.getEnhanced;
-    },
-    //function that will save the value of the atribute date of the store
-    //to get the infoamtion of the date pressed the new component
-    date() {
-      if (this.pressed != null) {
-        this.$store.commit("setDate", this.pressed);
-        this.$router.push("/e_p_2");
-      }
     }
   }
 };

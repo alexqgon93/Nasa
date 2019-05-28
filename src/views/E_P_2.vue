@@ -73,7 +73,17 @@
     </v-navigation-drawer>
     <h1 class="font">Date selected</h1>
     <h1 class="font_date">{{date_selected}}</h1>
-    
+
+    <v-container v-if="hours !=null">
+      <v-list>
+        <template v-for="(event,index) in hours">
+          <v-flex v-if="event.date" :key="index">
+            <a dark v-on:click="getDates(event.image)">{{event.date}}</a>
+          </v-flex>
+        </template>
+      </v-list>
+    </v-container>
+
     <v-footer height="auto" color="grey" class="footer_div">
       <v-layout justify-center row wrap>
         <v-flex py-3 text-xs-center white--text xs12>
@@ -91,17 +101,39 @@ export default {
   data() {
     return {
       drawer: false,
-      pictures: null,
       en_hours: "https://epic.gsfc.nasa.gov/api/enhanced/date/",
-      na_hours:"https://epic.gsfc.nasa.gov/api/natural/date/"
+      na_hours: "https://epic.gsfc.nasa.gov/api/natural/date/",
+      pic: "https://epic.gsfc.nasa.gov/archive/",
+      hours: null,
+      pressed: null
     };
   },
   methods: {
-    getHours(){
-      fetch(this.en_hours+ date_selected)
-      .then(r=>r.json())
-      .then(data=> {
-        console.log(data)
+    getDates(foto) {
+      if (this.pictures == "natural") {
+        let date = this.date_selected.split("-").join("/");
+        // console.log(
+        //   this.pic + this.pictures + "/" + date + "/png/" + foto + ".png"
+        // );
+        fetch(this.pic + this.pictures + "/" + date + "/png/" + foto + ".png")
+          .then(r => r.json())
+          .then(data => {
+            console.log(data);
+          });
+      } else {
+        let date = this.date_selected.split("-").join("/");
+        fetch(this.pic + this.pictures + "/" + date + "/png/" + foto + ".png")
+          .then(r => r.json())
+          .then(data => {
+            console.log(data);
+          });
+      }
+    },
+    getHours() {
+      fetch(this.na_hours + this.date_selected)
+        .then(r => r.json())
+        .then(data => {
+          this.hours = data;
         });
     },
     logout() {
@@ -132,9 +164,12 @@ export default {
     },
     date_selected() {
       return this.$store.getters.getDate;
+    },
+    pictures() {
+      return this.$store.getters.getOption;
     }
   },
-  created(){
+  created() {
     this.getHours();
   }
 };
