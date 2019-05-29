@@ -9,6 +9,7 @@
 
       <v-btn icon>
         <v-img v-if="nameUser" :src="nameUser.photoURL"></v-img>
+        <v-img v-else src="no_user.jpg"></v-img>
       </v-btn>
     </v-toolbar>
     <v-navigation-drawer v-model="drawer" absolute temporary>
@@ -71,7 +72,11 @@
         </router-link>
       </v-list>
     </v-navigation-drawer>
-    <h1 class="font_1" v-if="nameUser!=null">Welcome {{nameUser.displayName}}</h1>
+    <h1
+      class="font_1"
+      v-if="(nameUser!=null)&&(nameUser.displayName!=null)"
+    >Welcome {{nameUser.displayName}}</h1>
+    <!-- <h1 class="font_1" v-if="(nameUser!=null)&&(nameUser.email)">Welcome {{nameUser.email}}</h1> -->
     <h1 class="font">Picture of the day</h1>
 
     <div class="p_day_div">

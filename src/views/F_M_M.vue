@@ -9,6 +9,7 @@
 
       <v-btn icon>
         <v-img v-if="nameUser" :src="nameUser.photoURL"></v-img>
+        <v-img v-else src="no_user.jpg"></v-img>
       </v-btn>
     </v-toolbar>
     <v-navigation-drawer v-model="drawer" absolute temporary>
@@ -20,6 +21,7 @@
             </v-list-tile-content>
           </v-list-tile>
         </router-link>
+        
         <router-link to="/e_p">
           <v-list-tile class="item">
             <v-list-tile-content>

@@ -20,17 +20,17 @@
             </v-list-tile-content>
           </v-list-tile>
         </router-link>
+        <router-link to="/e_p">
+          <v-list-tile class="item">
+            <v-list-tile-content>
+              <v-list-tile-title>Epic Earth Photos</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </router-link>
         <router-link to="/e_i">
           <v-list-tile class="item">
             <v-list-tile-content>
               <v-list-tile-title>Epic Camera Info</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-        </router-link>
-        <router-link to="/m_r_p">
-          <v-list-tile class="item">
-            <v-list-tile-content>
-              <v-list-tile-title>Mars Rover Photos</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
         </router-link>

@@ -1,5 +1,5 @@
 <template>
-  <div class="exterior_1" v-if="(natural != null)&&(enhanced!=null)">
+  <div class="exterior_1" v-if="natural != null">
     <!--First the nav bar--->
     <v-toolbar>
       <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
@@ -79,23 +79,12 @@
       </router-link>
     </div>
     <v-container class="p_day_div">
-      <h2>choose natural images or enhanched</h2>
-      <v-select label="Type of Pictures" :items="dropdown_font" class="drop" v-model="pictures"></v-select>
+      <h2>Choose the date you want to see natural images</h2>
     </v-container>
 
     <v-container v-if="pictures ==  'natural'">
       <v-list>
         <template v-for="(event,index) in natural">
-          <v-flex v-if="event.date" :key="index">
-            <a dark v-on:click="sendDate(event.date)">{{event.date}}</a>
-          </v-flex>
-        </template>
-      </v-list>
-    </v-container>
-
-    <v-container v-if="pictures ==  'enhanced'">
-      <v-list>
-        <template v-for="(event,index) in enhanced">
           <v-flex v-if="event.date" :key="index">
             <a dark v-on:click="sendDate(event.date)">{{event.date}}</a>
           </v-flex>
@@ -118,9 +107,8 @@ import firebase from "firebase";
 export default {
   data() {
     return {
-      dropdown_font: ["natural", "enhanced"],
       drawer: false,
-      pictures: null,
+      pictures: "natural",
       pressed: null
     };
   },

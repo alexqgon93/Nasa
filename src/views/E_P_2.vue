@@ -1,5 +1,5 @@
 <template>
-  <div class="exterior_1" v-if="(natural != null)&&(enhanced!=null)">
+  <div class="exterior_1" v-if="natural != null">
     <!--First the nav bar--->
     <v-toolbar>
       <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
@@ -9,6 +9,7 @@
 
       <v-btn icon>
         <v-img v-if="nameUser" :src="nameUser.photoURL"></v-img>
+        <v-img v-else src="no_user.jpg"></v-img>
       </v-btn>
     </v-toolbar>
     <v-navigation-drawer v-model="drawer" absolute temporary>
@@ -114,7 +115,6 @@ export default {
     return {
       dialog: false,
       drawer: false,
-      en_hours: "https://epic.gsfc.nasa.gov/api/enhanced/date/",
       na_hours: "https://epic.gsfc.nasa.gov/api/natural/date/",
       pic: "https://epic.gsfc.nasa.gov/archive/",
       hours: null,
@@ -163,9 +163,6 @@ export default {
     },
     natural() {
       return this.$store.getters.getNatural;
-    },
-    enhanced() {
-      return this.$store.getters.getEnhanced;
     },
     date_selected() {
       return this.$store.getters.getDate;
@@ -232,7 +229,7 @@ a.router-link-active {
   color: crimson;
   text-align: center;
 }
-iframe>img{
+iframe > img {
   width: 100%;
 }
 </style>

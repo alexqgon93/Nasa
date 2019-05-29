@@ -9,6 +9,7 @@
 
       <v-btn icon>
         <v-img v-if="nameUser" :src="nameUser.photoURL"></v-img>
+        <v-img v-else src="no_user.jpg"></v-img>
       </v-btn>
     </v-toolbar>
     <v-navigation-drawer v-model="drawer" absolute temporary>

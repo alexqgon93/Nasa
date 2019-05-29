@@ -8,7 +8,7 @@
       <v-spacer></v-spacer>
 
       <v-btn icon>
-        <v-icon>more_vert</v-icon>
+        <v-img src="no_user.jpg"></v-img>
       </v-btn>
     </v-toolbar>
     <v-navigation-drawer v-model="drawer" absolute temporary>
@@ -60,10 +60,8 @@
     <h1 class="font">Sign up</h1>
     <v-container>
       <form class="form_s">
-        <!-- <v-text-field label="Name" class="labels" v-model="form.name"></v-text-field>
-        <v-text-field label="Surname" v-model="form.surname"></v-text-field>-->
         <v-text-field label="E-mail" v-model="form.email"></v-text-field>
-        <!--<v-text-field label="Username" v-model="form.username"></v-text-field>-->
+        <v-text-field label="Name" v-model="form.name"></v-text-field>
         <v-text-field
           v-model="form.password"
           :type="show1 ? 'text' : 'password'"
@@ -101,10 +99,8 @@ export default {
       selected: "",
       drawer: false,
       form: {
-        //name: null,
-        //surname: null,
+        name: null,
         email: null,
-        //username: null,
         password: null,
         accepted: null
       }
@@ -117,24 +113,40 @@ export default {
           alert("Please enter an email address.");
           return;
         } else {
-          if (this.form.password != null) {
-            firebase
-              .auth()
-              .createUserWithEmailAndPassword(
-                this.form.email,
-                this.form.password.toLowerCase()
-              )
-              .then(() => {
-                alert("Congrats you have been succesfully registred");
-                this.$router.push("Home");
-              })
-              .catch(function(error) {
-                alert(error.message);
-                return;
-              });
+          if (this.form.name.length > 1) {
+            if (this.form.password != null) {
+              firebase
+                .auth()
+                .createUserWithEmailAndPassword(
+                  this.form.email.toLowerCase(),
+                  this.form.password.toLowerCase()
+                )
+                .then(() => {
+                  alert("Congrats you have been succesfully registred");
+                  firebase
+                    .auth()
+                    .currentUser.updateProfile({
+                      displayName: this.form.name,
+                      photoURL: "new_user.png"
+                    })
+                    .then(() => {
+                      this.$store.commit(
+                        "setUser",
+                        firebase.auth().currentUser
+                      );
+                      this.$router.push("Home");
+                    });
+                })
+                .catch(function(error) {
+                  alert(error.message);
+                  return;
+                });
+            } else {
+              alert("Password need to be filled");
+              return;
+            }
           } else {
-            alert("Password need to be filled");
-            return;
+            alert("Name should filled in with a correct name!!!");
           }
         }
       } else {

@@ -8,7 +8,7 @@
 
       <v-spacer></v-spacer>
       <v-btn icon>
-        <v-img v-if="nameUser" :src="nameUser.photoURL"></v-img>
+        <v-img src="no_user.jpg"></v-img>
       </v-btn>
     </v-toolbar>
     <v-navigation-drawer v-model="drawer" absolute temporary>
@@ -74,9 +74,6 @@
           <a v-on:click="login">
             <img src="google_icon.png" class="icon">
           </a>
-          <a v-on:click="login_face">
-            <img src="facebook_logo.png" class="icon">
-          </a>
         </div>
       </form>
     </v-container>
@@ -109,20 +106,6 @@ export default {
     };
   },
   methods: {
-    login_face() {
-      var provider = new firebase.auth.FacebookAuthProvider();
-      firebase
-        .auth()
-        .signInWithPopup(provider)
-        .then(user => {
-          this.$store.commit("setUser", user);
-          firebase
-            .auth()
-            .setPersistence(firebase.auth.Auth.Persistence.SESSION);
-          this.$router.push("Home");
-        })
-        .catch(error => alert(error));
-    },
     enter() {
       //check if the user is in the data base
       firebase
