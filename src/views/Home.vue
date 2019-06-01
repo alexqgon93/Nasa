@@ -6,11 +6,26 @@
       <v-toolbar-title class="white--text">Home - Nasa</v-toolbar-title>
 
       <v-spacer></v-spacer>
+      <v-menu offset-y>
+        <template v-slot:activator="{ on }">
+          <v-btn dark icon>
+            <v-btn icon>
+              <v-img v-if="nameUser" :src="nameUser.photoURL" v-on="on"></v-img>
+              <v-img v-else src="no_user.jpg"></v-img>
+            </v-btn>
+          </v-btn>
+        </template>
 
-      <v-btn icon>
+        <v-list>
+          <v-list-tile>
+            <v-list-tile-title v-on:click="logout">Logout</v-list-tile-title>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
+      <!-- <v-btn icon>
         <v-img v-if="nameUser" :src="nameUser.photoURL"></v-img>
         <v-img v-else src="no_user.jpg"></v-img>
-      </v-btn>
+      </v-btn>-->
     </v-toolbar>
     <v-navigation-drawer v-model="drawer" absolute temporary>
       <v-list class="pa-0" dense>
@@ -56,13 +71,13 @@
             </v-list-tile-content>
           </v-list-tile>
         </router-link>
-        <a v-on:click="logout" v-if="nameUser">
+        <!-- <a v-on:click="logout" v-if="nameUser">
           <v-list-tile class="item">
             <v-list-tile-content>
               <v-list-tile-title>Logout</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
-        </a>
+        </a> -->
         <router-link to="/about">
           <v-list-tile class="item">
             <v-list-tile-content>
