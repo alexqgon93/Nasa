@@ -7,10 +7,22 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn icon>
-        <v-img v-if="nameUser" :src="nameUser.photoURL"></v-img>
-        <v-img v-else src="no_user.jpg"></v-img>
-      </v-btn>
+      <v-menu offset-y>
+        <template v-slot:activator="{ on }">
+          <v-btn dark icon>
+            <v-btn icon>
+              <v-img v-if="nameUser" :src="nameUser.photoURL" v-on="on"></v-img>
+              <v-img v-else src="no_user.jpg"></v-img>
+            </v-btn>
+          </v-btn>
+        </template>
+
+        <v-list>
+          <v-list-tile>
+            <v-list-tile-title v-on:click="logout">Logout</v-list-tile-title>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
     </v-toolbar>
     <v-navigation-drawer v-model="drawer" absolute temporary>
       <v-list class="pa-0" dense>

@@ -77,7 +77,7 @@
               <v-list-tile-title>Logout</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
-        </a> -->
+        </a>-->
         <router-link to="/about">
           <v-list-tile class="item">
             <v-list-tile-content>
@@ -254,6 +254,10 @@ aside.v-navigation-drawer.v-navigation-drawer--absolute.v-navigation-drawer--ope
 }
 nav.v-toolbar.theme--light {
   background-color: darkgray;
+}
+.v-toolbar__content .v-btn--icon,
+.v-toolbar__extension .v-btn--icon {
+  margin: 0;
 }
 a {
   text-decoration: none;
