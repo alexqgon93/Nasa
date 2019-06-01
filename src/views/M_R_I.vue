@@ -52,13 +52,6 @@
             </v-list-tile-content>
           </v-list-tile>
         </router-link>
-        <router-link to="/l" v-if="!nameUser">
-          <v-list-tile class="item">
-            <v-list-tile-content>
-              <v-list-tile-title>Login</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-        </router-link>
         <router-link to="/forum" v-if="nameUser">
           <v-list-tile class="item">
             <v-list-tile-content>
@@ -66,17 +59,24 @@
             </v-list-tile-content>
           </v-list-tile>
         </router-link>
-        <a v-on:click="logout" v-if="nameUser">
+        <!-- <a v-on:click="logout" v-if="nameUser">
           <v-list-tile class="item">
             <v-list-tile-content>
               <v-list-tile-title>Logout</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
-        </a>
+        </a>-->
         <router-link to="/about">
           <v-list-tile class="item">
             <v-list-tile-content>
               <v-list-tile-title>Gerenal Info</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </router-link>
+        <router-link to="/l" v-if="!nameUser">
+          <v-list-tile class="item">
+            <v-list-tile-content>
+              <v-list-tile-title>Login</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
         </router-link>
@@ -158,9 +158,9 @@
       </v-container>
       <p
         class="p_day_div"
-      >The rover has an X band low-gain and an X band high-gain antenna for communications to and from the Earth, as well as an ultra high frequency monopole antenna for relay communications. The low-gain antenna is omnidirectional, and transmits data at a low rate to Deep Space Network (DSN) antennas on Earth. The high-gain antenna is directional and steerable, and can transmit data to Earth at a higher rate. The rovers use the UHF monopole and its CE505 radio to communicate with spacecraft orbiting Mars, the Mars Odyssey and (before its failure) the Mars Global Surveyor (already more than 7.6 terabits of data were transferred using its Mars Relay antenna and Mars Orbiter Camera's memory buffer of 12 MB).[60] Since MRO went into orbit around Mars, the landers have also used it as a relay asset. Most of the lander data is relayed to Earth through Odyssey and MRO. The orbiters can receive rover signals at a much higher data rate than the Deep Space Network can, due to the much shorter distances from rover to orbiter. The orbiters then quickly relay the rover data to the Earth using their large and high-powered antennas.</p>
+      >The rover has an X band low-gain and an X band high-gain antenna for communications to and from the Earth, as well as an ultra high frequency monopole antenna for relay communications. The low-gain antenna is omnidirectional, and transmits data at a low rate to Deep Space Network (DSN) antennas on Earth. The high-gain antenna is directional and steerable, and can transmit data to Earth at a higher rate.</p>
       <p class="p_day_div" v-if="show_4">
-        <br>Each rover has nine cameras, which produce 1024-pixel by 1024-pixel images at 12 bits per pixel,[61] but most navigation camera images and image thumbnails are truncated to 8 bits per pixel to conserve memory and transmission time. All images are then compressed using ICER before being stored and sent to Earth. Navigation, thumbnail, and many other image types are compressed to approximately 0.8 to 1.1 bits/pixel. Lower bit rates (less than 0.5-bit/pixel) are used for certain wavelengths of multi-color panoramic images.
+        The rovers use the UHF monopole and its CE505 radio to communicate with spacecraft orbiting Mars, the Mars Odyssey and (before its failure) the Mars Global Surveyor (already more than 7.6 terabits of data were transferred using its Mars Relay antenna and Mars Orbiter Camera's memory buffer of 12 MB). Since MRO went into orbit around Mars, the landers have also used it as a relay asset. Most of the lander data is relayed to Earth through Odyssey and MRO. <br>The orbiters can receive rover signals at a much higher data rate than the Deep Space Network can, due to the much shorter distances from rover to orbiter. The orbiters then quickly relay the rover data to the Earth using their large and high-powered antennas.Each rover has nine cameras, which produce 1024-pixel by 1024-pixel images at 12 bits per pixel, but most navigation camera images and image thumbnails are truncated to 8 bits per pixel to conserve memory and transmission time. All images are then compressed using ICER before being stored and sent to Earth. Navigation, thumbnail, and many other image types are compressed to approximately 0.8 to 1.1 bits/pixel. Lower bit rates (less than 0.5-bit/pixel) are used for certain wavelengths of multi-color panoramic images.
         <br>ICER is based on wavelets, and was designed specifically for deep-space applications. It produces progressive compression, both lossless and lossy, and incorporates an error-containment scheme to limit the effects of data loss on the deep-space channel. It outperforms the lossy JPEG image compressor and the lossless Rice compressor used by the Mars Pathfinder mission.
       </p>
       <v-btn color="info" v-if="!show_4" v-on:click="showlm">Read More</v-btn>

@@ -68,17 +68,24 @@
             </v-list-tile-content>
           </v-list-tile>
         </router-link>
-        <a v-on:click="logout" v-if="nameUser">
+        <!-- <a v-on:click="logout" v-if="nameUser">
           <v-list-tile class="item">
             <v-list-tile-content>
               <v-list-tile-title>Logout</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
-        </a>
+        </a> -->
         <router-link to="/about">
           <v-list-tile class="item">
             <v-list-tile-content>
               <v-list-tile-title>Gerenal Info</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </router-link>
+        <router-link to="/l" v-if="!nameUser">
+          <v-list-tile class="item">
+            <v-list-tile-content>
+              <v-list-tile-title>Login</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
         </router-link>

@@ -75,13 +75,13 @@
             </v-list-tile-content>
           </v-list-tile>
         </router-link>
-        <a v-on:click="logout" v-if="nameUser">
+        <!-- <a v-on:click="logout" v-if="nameUser">
           <v-list-tile class="item">
             <v-list-tile-content>
               <v-list-tile-title>Logout</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
-        </a>
+        </a>-->
       </v-list>
     </v-navigation-drawer>
     <h1 class="font">General Information</h1>
@@ -94,7 +94,7 @@
     <v-container>
       <h2 class="font">App Porpuses</h2>
       <p
-        class="p_day_div"
+        class="p_day_div_about"
       >The purpose of this app is focused to give the opportunity to those who likes to be in contact with space information and wants to be connected and enjoy with perfect pictures, news about the catastrophic issues, and get to know information about the systems that provides the information that we are able to show. We do not own the rights to the Api's we have taken the info from. All the API's can be found in the NASA official.</p>
     </v-container>
     <v-footer height="auto" color="grey" class="footer_div">
@@ -159,6 +159,13 @@ export default {
   text-align: justify;
   font-family: "Open Sans", sans-serif;
   font-size: 1.2em;
+}
+.p_day_div_about {
+  color: white;
+  text-align: justify;
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.2em;
+  padding-bottom: 10%;
 }
 .font {
   color: white;
