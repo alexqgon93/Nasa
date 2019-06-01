@@ -7,6 +7,7 @@ import Epic_2 from "./views/E_P_2.vue";
 import Epic_Info from "./views/E_P_I.vue";
 import Login from "./views/Login.vue";
 import Sign_Up from "./views/Sign_Up.vue";
+import Recovery from "./views/R_P.vue";
 import Mars_Rover_Pictures from "./views/M_R_P.vue";
 import Mars_Rover_Info from "./views/M_R_I.vue";
 import Forum from "./views/Forum.vue";
@@ -64,6 +65,11 @@ export default new Router({
       path: "/s_u",
       name: "sing up",
       component: Sign_Up
+    },
+    {
+      path: "/r_p",
+      name: "recovery",
+      component: Recovery
     },
     {
       path: "/forum",

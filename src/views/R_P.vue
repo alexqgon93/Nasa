@@ -3,10 +3,10 @@
     <!--First the nav bar--->
     <v-toolbar>
       <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title class="white--text" v-if="!nameUser">Login</v-toolbar-title>
-      <v-toolbar-title class="white--text" v-if="nameUser!=null">{{nameUser.displayName}}</v-toolbar-title>
+      <v-toolbar-title class="white--text">Recovery</v-toolbar-title>
 
       <v-spacer></v-spacer>
+
       <v-btn icon>
         <v-img src="no_user.jpg"></v-img>
       </v-btn>
@@ -57,35 +57,19 @@
         </router-link>
       </v-list>
     </v-navigation-drawer>
-    <h1 class="font">Login</h1>
+    <h1 class="font">Password Recovery</h1>
+    <p
+      class="font"
+    >For us to send you and email, please write down your email and press the button below</p>
     <v-container>
       <form class="form_s">
-        <v-text-field label="Email" class="labels" v-model="email" style="color: white"></v-text-field>
-        <v-text-field
-          v-model="password"
-          :type="show1 ? 'text' : 'password'"
-          name="input-10-1"
-          label="Password"
-        ></v-text-field>
+        <v-text-field label="E-mail" v-model="email"></v-text-field>
         <div class="en_but">
-          <router-link to="/r_p">Don't remember the password?</router-link>
-        </div>
-        <div class="en_but">
-          <v-btn v-on:click="enter">Enter</v-btn>
-        </div>
-        <div class="but_log">
-          <a v-on:click="login">
-            <img src="google_icon.png" class="icon">
-          </a>
+          <v-btn v-on:click="sendMail">Send Recovery Password Email</v-btn>
         </div>
       </form>
     </v-container>
-    <h2 class="font">If you are not registered follow the link</h2>
-    <div class="en_but">
-      <router-link to="/s_u">
-        <v-btn depressed small color="primary">Register</v-btn>
-      </router-link>
-    </div>
+
     <v-footer height="auto" color="grey" class="footer_div">
       <v-layout justify-center row wrap>
         <v-flex py-3 text-xs-center white--text xs12>
@@ -98,55 +82,37 @@
 </template>
 
 <script>
+/* eslint-disable */
 import firebase from "firebase";
 export default {
   data() {
     return {
-      drawer: false,
       show1: false,
-      email: null,
-      password: null
+      selected: "",
+      drawer: false,
+      email: null
     };
   },
   methods: {
-    enter() {
-      //check if the user is in the data base
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(this.email, this.password)
-        .then(() => {
-          this.$store.commit("setUser", this.email);
-          firebase
-            .auth()
-            .setPersistence(firebase.auth.Auth.Persistence.SESSION);
-          this.$router.push("Home");
-        })
-        .catch(error => {
-          alert(error);
-        });
-    },
-    login() {
-      var provider = new firebase.auth.GoogleAuthProvider();
-      firebase
-        .auth()
-        .signInWithPopup(provider)
-        .then(user => {
-          this.$store.commit("setUser", user);
-          firebase
-            .auth()
-            .setPersistence(firebase.auth.Auth.Persistence.SESSION);
-          this.$router.push("Home");
-        })
-        .catch(error => alert(error));
-    }
-  },
-  computed: {
-    nameUser() {
-      return this.$store.getters.getUser;
+    sendMail() {
+      if (this.email.length > 4) {
+        firebase
+          .auth()
+          .sendPasswordResetEmail(this.email.toLowerCase())
+          .then(() => {
+            alert(
+              "We have send to you the email for the password recovery. Go and check and recover your password. !!IMPORTANT EMAIL MAYBE PLACED IN THE SPAM FOLDER!!"
+            );
+            this.$router.push("/home");
+          });
+      } else {
+        alert("Email is not well writed!!!!");
+      }
     }
   }
 };
 </script>
+
 <style>
 .exterior_1 {
   background-image: url("/uniphoto.jpg");
@@ -157,66 +123,82 @@ export default {
   background-repeat: no-repeat;
   height: 100%;
 }
+
 .p_day_div {
   color: white;
   text-align: justify;
 }
+
 .font {
   color: white;
   text-align: center;
 }
+
 .v-list.theme--dark {
   background-color: lightsteelblue;
-  color: white;
+  color: black;
 }
+
 .pa-0 {
   margin-top: 10%;
 }
+
 .v-list__tile__title {
   font-size: 25px;
 }
+
 .item {
   margin-bottom: 10%;
   font-size: 5%;
   color: white;
 }
+
 aside.v-navigation-drawer.v-navigation-drawer--absolute.v-navigation-drawer--open.v-navigation-drawer--temporary.theme--light {
   background-color: darkgrey;
 }
+
 nav.v-toolbar.theme--light {
   background-color: darkgray;
 }
+
 a.router-link-active {
   text-decoration: none;
 }
+
 .footer_div {
   position: absolute;
   bottom: 0;
   width: 100%;
 }
-.container_ep {
-  margin-bottom: 10%;
+
+.form_s {
+  margin-bottom: 15%;
 }
-.en_but {
-  text-align: center;
-}
-.icon {
-  width: 10%;
-}
-.but_log {
-  text-align: center;
-}
-.labels {
+
+label.v-label.theme--light {
   color: white;
 }
-.v-input__slot {
-  color: purple;
+
+::before,
+::after {
+  text-decoration: inherit;
+  vertical-align: inherit;
+  background-color: white;
 }
+
+input[type="text"]:focus {
+  background-color: rgba(255, 255, 255, 0.452);
+  text-decoration-color: aliceblue;
+}
+
 .theme--light.v-input:not(.v-input--is-disabled) input,
 .theme--light.v-input:not(.v-input--is-disabled) textarea {
-  color: white !important;
+  color: white;
+}
+
+.theme--light.v-icon {
+  color: white;
 }
 </style>
-
 
 

@@ -119,7 +119,7 @@ export default {
                 .auth()
                 .createUserWithEmailAndPassword(
                   this.form.email.toLowerCase(),
-                  this.form.password.toLowerCase()
+                  this.form.password
                 )
                 .then(() => {
                   alert("Congrats you have been succesfully registred");
