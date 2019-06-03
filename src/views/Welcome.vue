@@ -17,7 +17,19 @@
 </template>
 
 <script>
-export default {};
+import { setTimeout } from "timers";
+export default {
+  methods: {
+    timeOut() {
+      setTimeout(() => {
+        this.$router.push("/home");
+      }, 3000);
+    }
+  },
+  created() {
+    this.timeOut();
+  }
+};
 </script>
 
 <style>

@@ -17,7 +17,7 @@
         </template>
 
         <v-list>
-          <v-list-tile>
+          <v-list-tile v-if="nameUser">
             <v-list-tile-title v-on:click="logout">Logout</v-list-tile-title>
           </v-list-tile>
         </v-list>
