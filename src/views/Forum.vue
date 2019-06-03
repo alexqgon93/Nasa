@@ -74,7 +74,7 @@
               <v-list-tile-title>Logout</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
-        </a> -->
+        </a>-->
         <router-link to="/about">
           <v-list-tile class="item">
             <v-list-tile-content>
@@ -95,10 +95,6 @@
       <router-link to="/f_m_m">
         <v-btn color="warning">Mars Missions</v-btn>
       </router-link>
-      <h2
-        class="font"
-      >If you don't find one that fits you and would like to open a new one please named and press new button</h2>
-      <v-btn color="warning">New Chat</v-btn>
     </v-container>
     <v-footer height="auto" color="grey" class="footer_div">
       <v-layout justify-center row wrap>
